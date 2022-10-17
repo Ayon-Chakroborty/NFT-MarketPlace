@@ -1,4 +1,7 @@
 
+use testdb;
+drop table if exists User;
+CREATE TABLE if exists User(
  email VARCHAR(50) NOT NULL, 
     firstName VARCHAR(10) NOT NULL, 
     lastName VARCHAR(10) NOT NULL, 
