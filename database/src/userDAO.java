@@ -45,7 +45,7 @@ public class userDAO
             } catch (ClassNotFoundException e) {
                 throw new SQLException(e);
             }
-            connect = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/testdb?allowPublicKeyRetrieval=true&useSSL=false&user=john&password=john1234");
+            connect = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/NFTDB?allowPublicKeyRetrieval=true&useSSL=false&user=john&password=john1234");
             System.out.println(connect);
         }
     }
@@ -53,7 +53,7 @@ public class userDAO
     public boolean database_login(String email, String password) throws SQLException{
     	try {
     		connect_func("john","john1234");
-    		String sql = "select * from user where email = ?";
+    		String sql = "select * from user where userID = ?";
     		preparedStatement = connect.prepareStatement(sql);
     		preparedStatement.setString(1, email);
     		ResultSet rs = preparedStatement.executeQuery();
@@ -101,8 +101,8 @@ public class userDAO
             int PPS_bal = resultSet.getInt("PPS_bal");
 
              
-            user users = new user(email,firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code, cash_bal,PPS_bal);
-            listUser.add(users);
+//            user users = new user(email,firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code, cash_bal,PPS_bal);
+//            listUser.add(users);
         }        
         resultSet.close();
         disconnect();        
@@ -117,20 +117,18 @@ public class userDAO
     
     public void insert(user users) throws SQLException {
     	connect_func("root","pass1234");         
-		String sql = "insert into User(email, firstName, lastName, password, birthday,adress_street_num, adress_street,adress_city,adress_state,adress_zip_code,cash_bal,PPS_bal) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?)";
+		String sql = "insert into User(email, userPass, firstName, lastName, birthday, address, address_city, address_state, address_zip_code, balance) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 			preparedStatement.setString(1, users.getEmail());
-			preparedStatement.setString(2, users.getFirstName());
-			preparedStatement.setString(3, users.getLastName());
-			preparedStatement.setString(4, users.getPassword());
+			preparedStatement.setString(2, users.getPassword());
+			preparedStatement.setString(3, users.getFirstName());
+			preparedStatement.setString(4, users.getLastName());
 			preparedStatement.setString(5, users.getBirthday());
-			preparedStatement.setString(6, users.getAdress_street_num());		
-			preparedStatement.setString(7, users.getAdress_street());		
-			preparedStatement.setString(8, users.getAdress_city());		
-			preparedStatement.setString(9, users.getAdress_state());		
-			preparedStatement.setString(10, users.getAdress_zip_code());		
-			preparedStatement.setInt(11, users.getCash_bal());		
-			preparedStatement.setInt(12, users.getPPS_bal());		
+			preparedStatement.setString(6, users.getAddress());		
+			preparedStatement.setString(7, users.getAddress_city());		
+			preparedStatement.setString(8, users.getAddress_state());		
+			preparedStatement.setString(9, users.getAddress_zip_code());		
+			preparedStatement.setDouble(10, users.getBalance());				
 
 		preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -149,7 +147,7 @@ public class userDAO
     }
      
     public boolean update(user users) throws SQLException {
-        String sql = "update User set firstName=?, lastName =?,password = ?,birthday=?,adress_street_num =?, adress_street=?,adress_city=?,adress_state=?,adress_zip_code=?, cash_bal=?, PPS_bal =? where email = ?";
+        String sql = "update User set firstName=?, lastName =?,password = ?, birthday=?, address=?, address_city=?, address_state=?,  address_zip_code=?, cash_bal=?, PPS_bal =? where email = ?";
         connect_func();
         
         preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
@@ -158,13 +156,12 @@ public class userDAO
 		preparedStatement.setString(3, users.getLastName());
 		preparedStatement.setString(4, users.getPassword());
 		preparedStatement.setString(5, users.getBirthday());
-		preparedStatement.setString(6, users.getAdress_street_num());		
-		preparedStatement.setString(7, users.getAdress_street());		
-		preparedStatement.setString(8, users.getAdress_city());		
-		preparedStatement.setString(9, users.getAdress_state());		
-		preparedStatement.setString(10, users.getAdress_zip_code());		
-		preparedStatement.setInt(11, users.getCash_bal());		
-		preparedStatement.setInt(12, users.getPPS_bal());
+		preparedStatement.setString(6, users.getAddress());	
+		preparedStatement.setString(7, users.getAddress_city());		
+		preparedStatement.setString(8, users.getAddress_state());		
+		preparedStatement.setString(9, users.getAddress_zip_code());		
+//		preparedStatement.setInt(11, users.getCash_bal());		
+//		preparedStatement.setInt(12, users.getPPS_bal());
          
         boolean rowUpdated = preparedStatement.executeUpdate() > 0;
         preparedStatement.close();
@@ -194,7 +191,7 @@ public class userDAO
             String adress_zip_code = resultSet.getString("adress_zip_code"); 
             int cash_bal = resultSet.getInt("cash_bal");
             int PPS_bal = resultSet.getInt("PPS_bal");
-            user = new user(email, firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code,cash_bal,PPS_bal);
+//            user = new user(email, firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code,cash_bal,PPS_bal);
         }
          
         resultSet.close();

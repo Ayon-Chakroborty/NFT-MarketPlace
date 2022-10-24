@@ -121,22 +121,21 @@ public class ControlServlet extends HttpServlet {
 	           
 	    private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	    	String email = request.getParameter("email");
+	   	 	String password = request.getParameter("password");
 	   	 	String firstName = request.getParameter("firstName");
 	   	 	String lastName = request.getParameter("lastName");
-	   	 	String password = request.getParameter("password");
 	   	 	String birthday = request.getParameter("birthday");
-	   	 	String adress_street_num = request.getParameter("adress_street_num"); 
-	   	 	String adress_street = request.getParameter("adress_street"); 
-	   	 	String adress_city = request.getParameter("adress_city"); 
-	   	 	String adress_state = request.getParameter("adress_state"); 
-	   	 	String adress_zip_code = request.getParameter("adress_zip_code"); 	   	 	
+	   	 	String address = request.getParameter("address"); 
+	   	 	String address_city = request.getParameter("address_city"); 
+	   	 	String address_state = request.getParameter("address_state"); 
+	   	 	String address_zip_code = request.getParameter("address_zip_code"); 	   	 	
 	   	 	String confirm = request.getParameter("confirmation");
 	   	 	
 	   	 	if (password.equals(confirm)) {
 	   	 		if (!userDAO.checkEmail(email)) {
 		   	 		System.out.println("Registration Successful! Added to database");
-		            user users = new user(email,firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code, 1000,0);
-		   	 		userDAO.insert(users);
+		            user users = new user(email, password, firstName, lastName, birthday, address, address_city, address_state, address_zip_code, 100.00);
+		            userDAO.insert(users);
 		   	 		response.sendRedirect("login.jsp");
 	   	 		}
 		   	 	else {
