@@ -31,8 +31,8 @@ create table if not exists User (
  
  
  
- drop table if exists Sell;
- create table if not exists Sell (
+ drop table if exists Sale_Oders;
+ create table if not exists Sale_Orders (
  saleID int(6) not null auto_increment,
  nftToBeSold int(6) not null,
  nftSeller varchar(100) not null,
@@ -46,12 +46,12 @@ create table if not exists User (
  );
  
  
- drop table if exists Transfer;
- create table if not exists Transfer(
+ drop table if exists Transfer_Orders;
+ create table if not exists Transfer_Orders(
  transferID int(6) not null auto_increment,
  nftToBeTransferred int(6) not null,
  nftOwner varchar(100) not null,
- transferredTo varchar(100),
+ transferredTo varchar(100) not null,
  primary key(transferID),
  foreign key(transferredTo) references User(email),
  foreign key(nftToBeTransferred) references NFT(NFTID),
