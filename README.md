@@ -6,6 +6,6 @@
 ## Jamil Ali contributions
 ### Helped with ER Diagram, Assumptions, and implemented root user and login functionaility
 
-### Hours Working Together: 11 Hours
+## Hours Working Together: 11 Hours
 
 ## Requirements: SQL DB script inside the SQLDatabaseFiles folder
