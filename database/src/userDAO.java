@@ -278,11 +278,11 @@ public class userDAO
 					            "PRIMARY KEY (email) "+"); ")
         					};
         String[] TUPLES = {("insert into User(email, userPass, firstName, lastName, birthday, address, address_city, address_state, address_zip_code, balance)"+
-        			"values ('jamil@gmail.com', 'jamil123 ', 'Jamil', 'Ali', '2000-06-27', '1234', 'Detroit', 'MI', '48201', '100'),"+
-			    		 	"('ayon@gmail.com', 'ayon123 ', 'Ayon', 'Chakroborty', '2000-05-27', '1234', 'Detroit', 'MI', '48201','100'),"+
-			    	 	 	"('jo@gmail.com', 'jo123 ', 'Jo', 'jo', '2000-04-27', '1234', 'Southfield', 'MI', '48201','100'),"+
-			    		 	"('wallace@gmail.com', 'wallace123 ', 'Wallace', 'Smith', '2000-03-27', '1234', 'Rochestor', 'MI', '48201','100'),"+
-			    		 	"('kamil@gmail.com', 'kamil123 ', 'Kamil', 'Ali', '2000-02-27', '1234', 'Detroit', 'MI', '48201','100'),"+
+        			"values ('jamil@gmail.com', 'jamil123', 'Jamil', 'Ali', '2000-06-27', '1234', 'Detroit', 'MI', '48201', '100'),"+
+			    		 	"('ayon@gmail.com', 'ayon123', 'Ayon', 'Chakroborty', '2000-05-27', '1234', 'Detroit', 'MI', '48201','100'),"+
+			    	 	 	"('jo@gmail.com', 'jo123', 'Jo', 'jo', '2000-04-27', '1234', 'Southfield', 'MI', '48201','100'),"+
+			    		 	"('wallace@gmail.com', 'wallace123', 'Wallace', 'Smith', '2000-03-27', '1234', 'Rochestor', 'MI', '48201','100'),"+
+			    		 	"('kamil@gmail.com', 'kamil123', 'Kamil', 'Ali', '2000-02-27', '1234', 'Detroit', 'MI', '48201','100'),"+
 			    			"('root', 'pass1234', 'Default','Default', '0000-00-00', '0000', 'Default', '00', '0000', '1000000000');")
 			    			};
         

@@ -21,8 +21,8 @@ create table if not exists User (
  drop table if exists NFT;
  create table if not exists NFT (
  NFTID int(6) not null auto_increment,
- nftName VARCHAR (100) NOT NULL,
- nftDescription VARCHAR (100) NOT NULL,
+ nftName VARCHAR (250) NOT NULL,
+ nftDescription VARCHAR (500) NOT NULL,
  imageData longblob not null,
  nftOwner varchar(100) not null,
  primary key(NFTID),
@@ -39,6 +39,8 @@ create table if not exists User (
  price decimal(65,2) not null,
  duration varchar(100) not null,
  soldTo varchar(100),
+ datePosted date not null,
+ dateSold Date,
  primary key(saleID),
  foreign key(soldTo) references User(email),
  foreign key(nftToBeSold) references NFT(NFTID),
@@ -52,6 +54,7 @@ create table if not exists User (
  nftToBeTransferred int(6) not null,
  nftOwner varchar(100) not null,
  transferredTo varchar(100) not null,
+ dateTransferred date not null,
  primary key(transferID),
  foreign key(transferredTo) references User(email),
  foreign key(nftToBeTransferred) references NFT(NFTID),
