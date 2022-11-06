@@ -11,7 +11,7 @@
 		<center><h1>Welcome! <%=session.getAttribute("username") %> have been successfully logged in</h1> </center>
 		<p> ${errorOne } </p>
 		<p> ${errorTwo } </p>
-		<form action="mint">
+		<form action="listSale">
 			<table border="1" cellpadding="5">
 				<tr>
 					<th>NFT Listed For Sale*: </th>

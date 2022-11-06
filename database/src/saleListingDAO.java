@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.http.HttpServlet;
 
@@ -38,15 +40,16 @@ public class saleListingDAO {
         }
     }
     
-    public void insert(nft nfts) throws SQLException {
+    public void insert(saleListing saleListings) throws SQLException {
     	connect_func();         
-		String sql = "insert into nft(NFTID, nftName, nftDescription, imageURL, nftOwner) values (?, ?, ?, ?, ?)";
+		String sql = "insert into nft(listID, nftListed, nftSeller, price, datePosted, endingDate) values (?, ?, ?, ?, ?, ?)";
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 		preparedStatement.setString(1, null);
-		preparedStatement.setString(2, nfts.getNFTname());
-		preparedStatement.setString(3, nfts.getNFTDescription());
-		preparedStatement.setString(4, nfts.getImageLink());
-		preparedStatement.setString(5, nfts.getNFTOwner());
+		preparedStatement.setString(2, saleListings.getNftListed());
+		preparedStatement.setString(3, saleListings.getNftSeller());
+		preparedStatement.setDouble(4, saleListings.getPrice());
+		preparedStatement.setObject(5, LocalDate.parse(saleListings.getDatePosted(), DateTimeFormatter.ofPattern("dd/MM/uuuu")));
+		preparedStatement.setObject(6, LocalDate.parse(saleListings.getEndingDate(), DateTimeFormatter.ofPattern("dd/MM/uuuu")));
 
 		preparedStatement.executeUpdate();
         preparedStatement.close();

@@ -25,6 +25,7 @@ public class ControlServlet extends HttpServlet {
 	    private static final long serialVersionUID = 1L;
 	    private userDAO userDAO = new userDAO();
 	    private nftDAO nftDAO = new nftDAO();
+	    private saleListingDAO saleListingDAO = new saleListingDAO();
 	    private String currentUser;
 	    private HttpSession session=null;
 	    
@@ -72,6 +73,9 @@ public class ControlServlet extends HttpServlet {
                  break;
         	case "/mint" :
         		mint(request, response);
+        		break;
+        	case "/listSale" :
+        		listSale(request, response);
         		break;
 	    	}
 	    }
@@ -170,8 +174,21 @@ public class ControlServlet extends HttpServlet {
             nftDAO.insert(nfts);
    	 		System.out.println("MINTING SUCCESS! Added to database");
    	 		response.sendRedirect("activitypage.jsp");
-
+	    }    
+	    
+	    private void listSale(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	System.out.print("In listSale() in ControlServerlet.java");
+	   	 	String nftListed = request.getParameter("nftListed");
+	   	 	String nftSeller = (String) session.getAttribute("username");
+	   	 	double nftPrice = Double.parseDouble(request.getParameter("price"));
+	   	 	String datePosted = request.getParameter("postingDate");
+	   	 	String endingDate = (String) session.getAttribute("endingDate");
+            saleListing saleListings = new saleListing(nftListed, nftSeller, nftPrice, datePosted, endingDate);
+            saleListingDAO.insert(saleListings);
+   	 		System.out.println("LISTING SUCCESS! Added to database");
+   	 		response.sendRedirect("activitypage.jsp");
 	    }     
+	    
 	    
 	    
 	    
