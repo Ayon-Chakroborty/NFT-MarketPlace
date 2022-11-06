@@ -7,14 +7,14 @@ import java.sql.Statement;
 
 import javax.servlet.http.HttpServlet;
 
-public class nftDAO {
+public class saleListingDAO {
 	private static final long serialVersionUID = 1L;
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	
-	public nftDAO(){}
+	public saleListingDAO(){}
 	
 	/** 
 	 * @see HttpServlet#HttpServlet()

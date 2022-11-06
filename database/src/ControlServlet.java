@@ -1,4 +1,5 @@
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,6 +24,7 @@ import java.sql.PreparedStatement;
 public class ControlServlet extends HttpServlet {
 	    private static final long serialVersionUID = 1L;
 	    private userDAO userDAO = new userDAO();
+	    private nftDAO nftDAO = new nftDAO();
 	    private String currentUser;
 	    private HttpSession session=null;
 	    
@@ -64,16 +66,20 @@ public class ControlServlet extends HttpServlet {
         	case "/logout":
         		logout(request,response);
         		break;
-        	 case "/list": 
+        	case "/list": 
                  System.out.println("The action is: list");
                  listUser(request, response);           	
                  break;
+        	case "/mint" :
+        		mint(request, response);
+        		break;
 	    	}
 	    }
 	    catch(Exception ex) {
         	System.out.println(ex.getMessage());
 	    	}
 	    }
+	   
         	
 	    private void listUser(HttpServletRequest request, HttpServletResponse response)
 	            throws SQLException, IOException, ServletException {
@@ -110,6 +116,8 @@ public class ControlServlet extends HttpServlet {
 			 	 
 			 	 currentUser = email;
 				 System.out.println("Login Successful! Redirecting");
+				 session = request.getSession();
+				 session.setAttribute("username", email);
 				 request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 			 			 			 			 
 	    	 }
@@ -149,7 +157,24 @@ public class ControlServlet extends HttpServlet {
 	   		 request.setAttribute("errorTwo","Registration failed: Password and Password Confirmation do not match.");
 	   		 request.getRequestDispatcher("register.jsp").forward(request, response);
 	   	 	}
-	    }    
+	    }   
+	    
+	    
+	    private void mint(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	System.out.print("IN mint() in ControlServerlet.java");
+	   	 	String nftName = request.getParameter("nftName");
+	   	 	String nftDescription = request.getParameter("nftDescription");
+	   	 	String imageURL = request.getParameter("imageURL");
+	   	 	String nftOwner = (String) session.getAttribute("username");
+            nft nfts = new nft(nftName, nftDescription, nftOwner, imageURL);
+            nftDAO.insert(nfts);
+   	 		System.out.println("MINTING SUCCESS! Added to database");
+   	 		response.sendRedirect("activitypage.jsp");
+
+	    }     
+	    
+	    
+	    
 	    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    	currentUser = "";
         		response.sendRedirect("login.jsp");

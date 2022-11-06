@@ -2,7 +2,9 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-<head><title>Create An NFT</title></head> 
+<head>
+<meta charset="ISO-8859-1">
+<head><title>List An NFT for Sale</title></head> 
 <body>
 	<div align="center">
 	
@@ -12,26 +14,32 @@
 		<form action="mint">
 			<table border="1" cellpadding="5">
 				<tr>
-					<th>NFT Name*: </th>
+					<th>NFT Listed For Sale*: </th>
 					<td align="center" colspan="3">
-						<input type="text" name="nftName" size="45"  placeholder="NFT Name" onfocus="this.value=''">
+						<input type="text" name="nftListed" size="45"  placeholder="NFT Name" onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
-					<th>Description*: </th>
-					<td align="center" colspan="3">
-						<input type="text" name="nftDescription" size="45" placeholder="Description" onfocus="this.value=''">
+					<th>Price*: </th>
+					<td align="left" colspan="3">
+						<input type="number" min="1" step="any" name="price">
 					</td>
 				</tr>
 				<tr>
-					<th>NFT Image URL*: </th>
-					<td align="center" colspan="3">
-						<input type="text" name="imageURL" size="45" placeholder="Place URL Here" onfocus="this.value=''">
+					<th>Posting Date*: </th>
+					<td align="left" colspan="3">
+						<input type="date" name="postingDate">
+					</td>
+				</tr>
+				<tr>
+					<th>Ending Date*: </th>
+					<td align="left" colspan="3">
+						<input type="date" name="endingDate" size="45"">
 					</td>
 				</tr>
 				<tr>
 					<td align="center" colspan="5">
-						<input type="submit" value="Publish"/>
+						<input type="submit" value="Post NFT Listing for Sale"/>
 					</td>
 				</tr>
 			</table>

@@ -2,18 +2,17 @@ import javax.imageio.ImageIO;
 
 
 public class nft {
-	//int NFTID;
 	String NFTname;
 	String NFTDescription;
 	String NFTOwner;
-	String ImageLink;
 	
-//	public int getNFTID() {
-//		return NFTID;
-//	}
-//	public void setNFTID(int nFTID) {
-//		NFTID = nFTID;
-//	}
+	public nft(String nFTname, String nFTDescription, String nFTOwner, String imageLink) {
+		NFTname = nFTname;
+		NFTDescription = nFTDescription;
+		NFTOwner = nFTOwner;
+		ImageLink = imageLink;
+	}
+	String ImageLink;
 	
 	public String getNFTname() {
 		return NFTname;

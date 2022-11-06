@@ -15,7 +15,7 @@
 				<th>Email</th>
                 <th>First name</th>
                 <th>Last name</th>
-                <th>Adress</th>
+                <th>Address</th>
                 <th>Password</th>
                 <th>Birthday</th>
                 <th>cash_bal($)</th>
