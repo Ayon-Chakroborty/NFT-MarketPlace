@@ -41,15 +41,32 @@ public class saleListingDAO {
     }
     
     public void insert(saleListing saleListings) throws SQLException {
-    	connect_func();         
-		String sql = "insert into nft(listID, nftListed, nftSeller, price, datePosted, endingDate) values (?, ?, ?, ?, ?, ?)";
+    	System.out.println("In saleListingDAO insert() method");
+    	connect_func();   
+    	String sqlGetNFTID = "select nftID from NFT where nftName=" + "\"" + saleListings.getNftListed() + "\"";
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sqlGetNFTID);
+		
+		resultSet = preparedStatement.executeQuery();
+		int nftId = 0;
+		if(resultSet.next()) {
+			nftId = resultSet.getInt("nftID");
+		}
+		
+		System.out.print("This is the nftID of this NFT: ");
+		System.out.println(nftId);
+		
+		
+		
+		
+		String sql = "insert into sale_listings(listID, nftListed, nftSeller, price, datePosted, endingDate) values (?, ?, ?, ?, ?, ?)";
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 		preparedStatement.setString(1, null);
-		preparedStatement.setString(2, saleListings.getNftListed());
+		preparedStatement.setInt(2, nftId);
 		preparedStatement.setString(3, saleListings.getNftSeller());
 		preparedStatement.setDouble(4, saleListings.getPrice());
-		preparedStatement.setObject(5, LocalDate.parse(saleListings.getDatePosted(), DateTimeFormatter.ofPattern("dd/MM/uuuu")));
-		preparedStatement.setObject(6, LocalDate.parse(saleListings.getEndingDate(), DateTimeFormatter.ofPattern("dd/MM/uuuu")));
+		System.out.println("prePared statement for dates");
+		preparedStatement.setDate(5, java.sql.Date.valueOf(saleListings.getDatePosted()));
+		preparedStatement.setObject(6, java.sql.Date.valueOf(saleListings.getEndingDate()));
 
 		preparedStatement.executeUpdate();
         preparedStatement.close();

@@ -180,9 +180,11 @@ public class ControlServlet extends HttpServlet {
 	    	System.out.print("In listSale() in ControlServerlet.java");
 	   	 	String nftListed = request.getParameter("nftListed");
 	   	 	String nftSeller = (String) session.getAttribute("username");
-	   	 	double nftPrice = Double.parseDouble(request.getParameter("price"));
+	   	 	double nftPrice = Double.parseDouble((String)request.getParameter("price"));
+	   	 	System.out.println("This is the NFT Price: ");
+	   	 	System.out.println(nftPrice);
 	   	 	String datePosted = request.getParameter("postingDate");
-	   	 	String endingDate = (String) session.getAttribute("endingDate");
+	   	 	String endingDate = request.getParameter("endingDate");
             saleListing saleListings = new saleListing(nftListed, nftSeller, nftPrice, datePosted, endingDate);
             saleListingDAO.insert(saleListings);
    	 		System.out.println("LISTING SUCCESS! Added to database");

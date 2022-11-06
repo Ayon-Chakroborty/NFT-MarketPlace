@@ -22,7 +22,7 @@
 				<tr>
 					<th>Price*: </th>
 					<td align="left" colspan="3">
-						<input type="number" min="1" step="any" name="price">
+						<input type="text" name="price">
 					</td>
 				</tr>
 				<tr>
