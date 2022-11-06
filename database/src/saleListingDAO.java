@@ -43,7 +43,8 @@ public class saleListingDAO {
     public void insert(saleListing saleListings) throws SQLException {
     	System.out.println("In saleListingDAO insert() method");
     	connect_func();   
-    	String sqlGetNFTID = "select nftID from NFT where nftName=" + "\"" + saleListings.getNftListed() + "\"";
+    	
+    	String sqlGetNFTID = "select nftID from NFT where nftName=" + "\"" + saleListings.getNftListed() + "\""; //Get the NFTID from the NFT Table
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sqlGetNFTID);
 		
 		resultSet = preparedStatement.executeQuery();
@@ -54,8 +55,6 @@ public class saleListingDAO {
 		
 		System.out.print("This is the nftID of this NFT: ");
 		System.out.println(nftId);
-		
-		
 		
 		
 		String sql = "insert into sale_listings(listID, nftListed, nftSeller, price, datePosted, endingDate) values (?, ?, ?, ?, ?, ?)";

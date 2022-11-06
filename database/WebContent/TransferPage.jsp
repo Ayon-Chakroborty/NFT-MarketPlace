@@ -4,42 +4,37 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<head><title>List An NFT for Sale</title></head> 
+<title>Insert title here</title>
+</head>
 <body>
 	<div align="center">
 	
-		<center><h1>Welcome! <%=session.getAttribute("username") %> have been successfully logged in</h1> </center>
+		<center><h1>Welcome! <%=session.getAttribute("username") %> Welcome to the Transfer Page!</h1> </center>
 		<p> ${errorOne } </p>
 		<p> ${errorTwo } </p>
-		<form action="listSale">
+		<form action="transfer">
 			<table border="1" cellpadding="5">
 				<tr>
-					<th>NFT Listed For Sale*: </th>
+					<th>NFT To Be Transfered*: </th>
 					<td align="center" colspan="3">
-						<input type="text" name="nftListed" size="45"  placeholder="NFT Name" onfocus="this.value=''">
+						<input type="text" name="nftToBeTransferred" size="45"  placeholder="NFT Name" onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
-					<th>Price*: </th>
+					<th>Transferred To: </th>
 					<td align="left" colspan="3">
-						<input type="text" name="price">
+						<input type="text" name="transferredTo" size="45"  placeholder="Transferred To" onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
-					<th>Posting Date*: </th>
+					<th>Transfer Date*: </th>
 					<td align="left" colspan="3">
-						<input type="date" name="postingDate">
-					</td>
-				</tr>
-				<tr>
-					<th>Ending Date*: </th>
-					<td align="left" colspan="3">
-						<input type="date" name="endingDate" size="45"">
+						<input type="date" name="transferDate">
 					</td>
 				</tr>
 				<tr>
 					<td align="center" colspan="5">
-						<input type="submit" value="Post NFT Listing for Sale"/>
+						<input type="submit" value="Transferr NFT"/>
 					</td>
 				</tr>
 			</table>

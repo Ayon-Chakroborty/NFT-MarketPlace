@@ -25,6 +25,7 @@ public class ControlServlet extends HttpServlet {
 	    private static final long serialVersionUID = 1L;
 	    private userDAO userDAO = new userDAO();
 	    private nftDAO nftDAO = new nftDAO();
+	    private transferOrderDAO transferOrderDAO = new transferOrderDAO();
 	    private saleListingDAO saleListingDAO = new saleListingDAO();
 	    private String currentUser;
 	    private HttpSession session=null;
@@ -76,6 +77,9 @@ public class ControlServlet extends HttpServlet {
         		break;
         	case "/listSale" :
         		listSale(request, response);
+        		break;
+        	case "/transfer" :
+        		transfer(request, response);
         		break;
 	    	}
 	    }
@@ -192,6 +196,21 @@ public class ControlServlet extends HttpServlet {
 	    }     
 	    
 	    
+	    private void transfer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	System.out.println("In transfer() in ControlServerlet.java");
+	   	 	String nftToBeTransfered = request.getParameter("nftToBeTransferred");
+	   	 	String transferredFrom = (String) session.getAttribute("username");
+	   	 	String transferredTo = request.getParameter("transferredTo");
+	   	 	String transferDate = request.getParameter("transferDate");
+            transferOrder transferOrders = new transferOrder(nftToBeTransfered, transferredTo, transferredFrom, transferDate);
+            System.out.print("Created transfer Object ");
+            System.out.println(transferOrders);
+            transferOrderDAO.insert(transferOrders);
+            transferOrderDAO.transferNFT(transferOrders);
+   	 		System.out.println("TRANSER SUCCESS! Added to database");
+   	 		response.sendRedirect("activitypage.jsp");
+	    }
+
 	    
 	    
 	    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {

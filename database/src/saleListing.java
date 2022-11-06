@@ -1,11 +1,11 @@
 
 public class saleListing {
 	
-	String nftListed;
-	String nftSeller;
-	double price;
-	String datePosted;
-	String endingDate;
+	protected String nftListed;
+	protected String nftSeller;
+	protected double price;
+	protected String datePosted;
+	protected String endingDate;
 	
 	public saleListing(String nftListed, String nftSeller, double price, String datePosted, String endingDate) {
 		super();
