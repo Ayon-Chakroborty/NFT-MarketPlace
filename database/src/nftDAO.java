@@ -51,5 +51,31 @@ public class nftDAO {
 		preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+    
+    public nft getNftInfoByName(String nftName) throws SQLException {
+    	connect_func();
+    	System.out.println("In getNftInfoByName() in nftDAO class");
+    	
+    	String sqlGetNFTID = "select * from NFT where nftName=" + "\"" + nftName + "\""; //Get the NFTID from the NFT Table
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sqlGetNFTID);
+		
+		resultSet = preparedStatement.executeQuery();
+		int nftId = 0;
+		String nftDescription = null;
+		String nftImageUrl = null;
+		String nftOwner = null;
+		if(resultSet.next()) {
+			nftId = resultSet.getInt("nftID");
+			nftDescription = resultSet.getString("nftDescription");
+			nftImageUrl = resultSet.getString("imageUrl");
+			nftOwner = resultSet.getString("nftOwner");
+			
+		}
+		
+        preparedStatement.close();
+        
+        return new nft(nftId, nftName, nftDescription,nftOwner, nftImageUrl);
+    	
+    }
 
 }

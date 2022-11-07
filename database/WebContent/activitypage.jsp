@@ -27,7 +27,8 @@
 	 	<div">
 		 	 <a href="CreateNFTs.jsp" target="_self">Mint An NFT</a> &nbsp <!-- nbsp used to put spaces inbetween links. Will remove once we include css to application -->
 		 	 <a href="saleListNftForm.jsp" target="_self">List An NFT For Sale</a> &nbsp
-		 	 <a href="TransferPage.jsp" target="_self">Transfer An NFT</a> &nbsp	  
+		 	 <a href="TransferPage.jsp" target="_self">Transfer An NFT</a> &nbsp
+		 	 <a href="SearchForNft.jsp" target="_self">Search For An NFT</a> &nbsp		  
 			 <a href="login.jsp"target ="_self" > Logout</a><br><br> 
 		 </div>
 		 <p> You can show all the transactions or other attributes here like balance, name of the user and others.</p>

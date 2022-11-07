@@ -73,6 +73,7 @@ public class ControlServlet extends HttpServlet {
                  listUser(request, response);           	
                  break;
         	case "/mint" :
+        		System.out.println("In case Mint");
         		mint(request, response);
         		break;
         	case "/listSale" :
@@ -80,6 +81,10 @@ public class ControlServlet extends HttpServlet {
         		break;
         	case "/transfer" :
         		transfer(request, response);
+        		break;
+        	case "/searchNft":
+        		System.out.println("In case searchNft");
+        		searchNft(request, response);
         		break;
 	    	}
 	    }
@@ -211,6 +216,34 @@ public class ControlServlet extends HttpServlet {
    	 		response.sendRedirect("activitypage.jsp");
 	    }
 
+	    private void searchNft(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	System.out.println("In searchNft() in ControlServerlet.java");
+	    	
+	    	String nftToSearch = request.getParameter("nftName");
+	    	nft nfts = nftDAO.getNftInfoByName(nftToSearch);
+	    	
+	    	System.out.println("Created nft object");
+	    	
+//    		int nftId = nfts.getNftId();
+//    		String nftOwner = nfts.getNFTOwner();
+//    		String nftName = nfts.getNFTname();
+//    		String nftDescription = nfts.getNFTDescription();
+//    		String nftImageUrl = nfts.getImageLink();
+//    		
+//    		request.setAttribute("nftName", nftName);
+//    		request.setAttribute("nftOwner", nftOwner);
+//    		request.setAttribute("nftId", nftId);
+//    		request.setAttribute("nftDescription", nftDescription);
+//    		request.setAttribute("nftImageUrl", nftImageUrl);
+	    	
+	    	request.setAttribute("nftInfo", nfts);
+    		
+    		String page = "/SearchForNft.jsp";
+    		
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+            requestDispatcher.forward(request, response); 	
+	    	
+	    }
 	    
 	    
 	    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
