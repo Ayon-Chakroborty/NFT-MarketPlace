@@ -21,16 +21,28 @@
 		<div class="container">
 		  <div class="row">
 		    <div class="span4"></div>
+<<<<<<< HEAD
 		    <div class="span4"><img class="center-block" src="${nfttest.getImageLink()}"></div>
 		    <div class="span4">
 		    	<h3>NFT Name: ${nfttest.getNFTname()}</h3>
 		    	<h3>NFT Owner: ${nfttest.getNFTOwner()}</h3>
 		    	<h3>NFT Description: ${nfttest.getNFTDescription()}</h3>		    	
+=======
+		    <div class="span4"><img class="center-block" src="${nftInfo.getImageLink()}"></div>
+		    <div class="span4">
+		    	<h3>NFT Name: ${nftInfo.getNFTname()}</h3>
+		    	<h3>NFT Owner: ${nftInfo.getNFTOwner()}</h3>
+		    	<h3>NFT Description: ${nftInfo.getNFTDescription()}</h3>		    	
+>>>>>>> c906e47e70d0acbd4f07694b263e8378a610f72c
 		    </div>
 		  </div>
 		</div>
 	</div>
 </body>
+<<<<<<< HEAD
 </html>
           
 			
+=======
+</html>
+>>>>>>> c906e47e70d0acbd4f07694b263e8378a610f72c

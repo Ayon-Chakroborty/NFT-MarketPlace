@@ -86,6 +86,7 @@ public class ControlServlet extends HttpServlet {
         		System.out.println("In case searchNft");
         		searchNft(request, response);
         		break;
+<<<<<<< HEAD
         	case "/searchUser":
         		System.out.println("In case searchUser");
         		searchUser(request, response);
@@ -97,6 +98,10 @@ public class ControlServlet extends HttpServlet {
 	    
         	
 	    
+=======
+	    	}
+	    }
+>>>>>>> c906e47e70d0acbd4f07694b263e8378a610f72c
 	    catch(Exception ex) {
         	System.out.println(ex.getMessage());
 	    	}
@@ -248,7 +253,11 @@ public class ControlServlet extends HttpServlet {
 //    		request.setAttribute("nftDescription", nftDescription);
 //    		request.setAttribute("nftImageUrl", nftImageUrl);
 	    	
+<<<<<<< HEAD
 	    	request.setAttribute("nfttest", nfts);
+=======
+	    	request.setAttribute("nftInfo", nfts);
+>>>>>>> c906e47e70d0acbd4f07694b263e8378a610f72c
     		
     		String page = "/SearchForNft.jsp";
     		
@@ -256,6 +265,7 @@ public class ControlServlet extends HttpServlet {
             requestDispatcher.forward(request, response); 	
 	    	
 	    }
+<<<<<<< HEAD
 	    
 	    private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	    	System.out.println("In searchUser() in ControlServerlet.java");
@@ -301,6 +311,8 @@ public class ControlServlet extends HttpServlet {
             requestDispatcher.forward(request, response); 	
 	    }
 	    
+=======
+>>>>>>> c906e47e70d0acbd4f07694b263e8378a610f72c
 	    
 	    
 	    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
