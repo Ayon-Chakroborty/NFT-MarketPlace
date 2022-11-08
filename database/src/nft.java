@@ -2,18 +2,47 @@ import javax.imageio.ImageIO;
 
 
 public class nft {
+	int nftId;
 	String NFTname;
 	String NFTDescription;
 	String NFTOwner;
+	String ImageLink;
+
 	
+	
+	
+	public nft(int nftId, String nFTname, String nFTDescription, String nFTOwner, String imageLink) {
+		super();
+		this.nftId = nftId;
+		NFTname = nFTname;
+		NFTDescription = nFTDescription;
+		NFTOwner = nFTOwner;
+		ImageLink = imageLink;
+	}
+
 	public nft(String nFTname, String nFTDescription, String nFTOwner, String imageLink) {
 		NFTname = nFTname;
 		NFTDescription = nFTDescription;
 		NFTOwner = nFTOwner;
 		ImageLink = imageLink;
 	}
-	String ImageLink;
 	
+	public nft(String nFTname) {
+		super();
+		NFTname = nFTname;
+	}
+	
+	
+	
+		
+	public int getNftId() {
+		return nftId;
+	}
+
+	public void setNftId(int nftId) {
+		this.nftId = nftId;
+	}
+
 	public String getNFTname() {
 		return NFTname;
 	}

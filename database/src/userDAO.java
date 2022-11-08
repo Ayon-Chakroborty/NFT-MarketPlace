@@ -255,6 +255,68 @@ public class userDAO
     	return false;
     }
     
+    public boolean nftValid(String search) throws SQLException
+    {
+    	String sql = "SELECT * FROM NFT";
+    	connect_func();
+    	statement = (Statement) connect.createStatement();
+    	ResultSet resultSet = statement.executeQuery(sql);
+    	
+    	resultSet.last();
+    	
+    	int setSize = resultSet.getRow();
+    	resultSet.beforeFirst();
+    	
+    	for(int i = 0; i < setSize; i++)
+    	{
+    		resultSet.next();
+    		if(resultSet.getString("nftName").equals(search)) {
+    			return true;
+    		}		
+    	}
+    	return false;
+    }
+   
+    public user getUserInfoByName(String userName) throws SQLException {
+    	connect_func();
+    	System.out.println("In userInfoName() in userDAO class");
+    	
+    	String sqlGetUserInfo = "select * from User where email=" + "\"" + userName + "\""; //Get the NFTID from the NFT Table
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sqlGetUserInfo);
+		
+		resultSet = preparedStatement.executeQuery();
+		String email = null;
+		String password = null;
+	    String firstName = null;
+	    String lastName = null;
+	    String address = null;
+	    
+	    String address_city = null;
+	    String address_state = null;
+	    String address_zip_code = null;
+	     String birthday = null;
+	     double balance = 0;
+	    if (resultSet.next()) {
+			email = resultSet.getString("email");
+			password = resultSet.getString("userPass");
+			firstName = resultSet.getString("firstName");
+			lastName = resultSet.getString("lastName");
+			address = resultSet.getString("address");
+			birthday = resultSet.getString("birthday");
+			address_city = resultSet.getString("address_city");
+			address_zip_code = resultSet.getString("address_zip_code");
+			address_state = resultSet.getString("address_state");
+			balance = resultSet.getDouble("balance");
+			
+			
+		}
+		
+        preparedStatement.close();
+        
+        return new user(email, password,firstName, lastName, birthday, address, address_city, address_state, address_zip_code, balance);
+    	
+    }
+    
     // works on initialzing DB
     public void init() throws SQLException, FileNotFoundException, IOException{
     	connect_func();

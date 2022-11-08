@@ -73,6 +73,7 @@ public class ControlServlet extends HttpServlet {
                  listUser(request, response);           	
                  break;
         	case "/mint" :
+        		System.out.println("In case Mint");
         		mint(request, response);
         		break;
         	case "/listSale" :
@@ -81,8 +82,21 @@ public class ControlServlet extends HttpServlet {
         	case "/transfer" :
         		transfer(request, response);
         		break;
-	    	}
-	    }
+        	case "/searchNft":
+        		System.out.println("In case searchNft");
+        		searchNft(request, response);
+        		break;
+        	case "/searchUser":
+        		System.out.println("In case searchUser");
+        		searchUser(request, response);
+        		break;
+	    	case "/myProfile":
+	    		System.out.println("In case myProfile");
+	    		myProfile(request, response);
+	    		break;}}
+	    
+        	
+	    
 	    catch(Exception ex) {
         	System.out.println(ex.getMessage());
 	    	}
@@ -210,7 +224,83 @@ public class ControlServlet extends HttpServlet {
    	 		System.out.println("TRANSER SUCCESS! Added to database");
    	 		response.sendRedirect("activitypage.jsp");
 	    }
+	    
+	  
+	    
 
+	    private void searchNft(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	System.out.println("In searchNft() in ControlServerlet.java");
+	    	
+	    	String nftToSearch = request.getParameter("nftName");
+	    	nft nfts = nftDAO.getNftInfoByName(nftToSearch);
+	    	
+	    	System.out.println("Created nft object");
+	    	
+//    		int nftId = nfts.getNftId();
+//    		String nftOwner = nfts.getNFTOwner();
+//    		String nftName = nfts.getNFTname();
+//    		String nftDescription = nfts.getNFTDescription();
+//    		String nftImageUrl = nfts.getImageLink();
+//    		
+//    		request.setAttribute("nftName", nftName);
+//    		request.setAttribute("nftOwner", nftOwner);
+//    		request.setAttribute("nftId", nftId);
+//    		request.setAttribute("nftDescription", nftDescription);
+//    		request.setAttribute("nftImageUrl", nftImageUrl);
+	    	
+	    	request.setAttribute("nfttest", nfts);
+    		
+    		String page = "/SearchForNft.jsp";
+    		
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+            requestDispatcher.forward(request, response); 	
+	    	
+	    }
+	    
+	    private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	System.out.println("In searchUser() in ControlServerlet.java");
+	    	
+	    	String userToSearch = request.getParameter("nftName");
+	    	user user = userDAO.getUserInfoByName(userToSearch);
+	    	nft nfts = nftDAO.getNftInfoByName(userToSearch);
+	    	
+	    	System.out.println("Created userObject object");
+	    	System.out.println("Created nftObject object");
+	    	
+//    		int nftId = nfts.getNftId();
+//    		String nftOwner = nfts.getNFTOwner();
+//    		String nftName = nfts.getNFTname();
+//    		String nftDescription = nfts.getNFTDescription();
+//    		String nftImageUrl = nfts.getImageLink();
+//    		
+//    		request.setAttribute("nftName", nftName);
+//    		request.setAttribute("nftOwner", nftOwner);
+//    		request.setAttribute("nftId", nftId);
+//    		request.setAttribute("nftDescription", nftDescription);
+//    		request.setAttribute("nftImageUrl", nftImageUrl);
+	    	
+	    	request.setAttribute("nfttest", user);
+	    	request.setAttribute("nfttest2", nfts);
+    		
+    		String page = "/SearchForUser.jsp";
+    		
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+            requestDispatcher.forward(request, response); 	
+	    	
+	    }
+	    
+	    private void myProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	System.out.println("profile view");
+	    	
+	    	String data = (String) session.getAttribute("username");
+	    	user user = userDAO.getUser(data);
+	    	request.setAttribute("listUser", user);
+	    	String page = "/myProfile.jsp";
+    		
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+            requestDispatcher.forward(request, response); 	
+	    }
+	    
 	    
 	    
 	    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -228,10 +318,6 @@ public class ControlServlet extends HttpServlet {
 	    
 	    
 }
-	        
-	        
-	    
-	        
 	        
 	        
 	    
