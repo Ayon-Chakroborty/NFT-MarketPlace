@@ -71,11 +71,32 @@ public class nftDAO {
 			nftOwner = resultSet.getString("nftOwner");
 			
 		}
-		
+
         preparedStatement.close();
-        
         return new nft(nftId, nftName, nftDescription,nftOwner, nftImageUrl);
     	
+    }
+    
+    public Boolean doesNftExist(String nftName) throws SQLException {
+    	connect_func();
+    	System.out.println("In doesNftExist() in nftDAO class");
+    	
+    	String sqlGetNFTID = "select count(nftName) from NFT where nftName=" + "\"" + nftName + "\""; //Get the NFTID from the NFT Table
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sqlGetNFTID);
+		resultSet = preparedStatement.executeQuery();
+		
+    	if(resultSet.next()) {
+    		int count = resultSet.getInt(1);
+    		if (count == 1) {
+    	        resultSet.close();
+    	        preparedStatement.close();
+    	        disconnect();
+    			return true;
+    		}
+    	}
+    	
+        preparedStatement.close();
+    	return false;
     }
 
 }
