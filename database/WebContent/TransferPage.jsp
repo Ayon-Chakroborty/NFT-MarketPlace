@@ -27,12 +27,6 @@
 					</td>
 				</tr>
 				<tr>
-					<th>Transfer Date*: </th>
-					<td align="left" colspan="3">
-						<input type="date" name="transferDate">
-					</td>
-				</tr>
-				<tr>
 					<td align="center" colspan="5">
 						<input type="submit" value="Transferr NFT"/>
 					</td>

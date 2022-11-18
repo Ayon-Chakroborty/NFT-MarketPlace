@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%
+	boolean doesUserExist = Boolean.TRUE == request.getAttribute("doesUserExist");
+
+	System.out.println("In SearchForUser.jsp");
+	System.out.println("doesUserExist: " + doesUserExist);
+
+%>       
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,30 +20,56 @@
 	<div class="container"></div>	
 	<div class="container">
 		<form class="d-flex justify-content-center h-100" action="searchUser">
-			<input class="form-control" type="text" name="nftName" placeholder="Search">
+			<input class="form-control" type="text" name="userName" placeholder="Search">
 			<span class="input-group-btn">
 				<button class="btn btn-success" type="submit">Search</button>
 			</span>
 		</form>
+		
 		<div class="container"></div>	
 		<div class="container"></div>	
+		
+		<% if (doesUserExist == true){ %>
 		<div class="container">
 		  <div class="row">
-		    <div class="span4"></div>
-	
-		    <div class="span4">
-		    	<h3> Name: ${nfttest.getFirstName()}</h3>
-		    	<h3> Balance: ${nfttest.getBalance()}</h3>	   	
+		    <div class="col-sm-4"></div>
+		    <div class="col-sm-4">
+		    <div style="object-fit: contain;">
+		    <img style="padding-top: 3em" class="center-block" src="${nftInfo.getImageLink()}">
 		    </div>
+		    </div>
+		    <div class="col-sm4"></div>
 		  </div>
+		  <div class="row">
+		    <div class="col-sm-4"></div>
+		    <div class="col-sm-8">
+		    	<h5>User: ${userInfo.getEmail()}</h5>
+		    	<h5>Balance: ${userInfo.getBalance()}</h5>
+		    	
+		    </div>	    	
+		    </div>
+		  <% } %><%  else { %>
+		  <div class="container">
+		  	<div class="row"> 
+		  		<div class="col-sm-12">
+		  			<div class="text-center"> 
+		  				<h5 style="padding: 3em 4em">Please Search For A User.</h5>
+		  			</div>
+		  		</div>
+		  	</div>
+		  </div>
+		  <% } %>
+		  
+		  
 		</div>
-		
-		<a href="login.jsp" target="_self">Return to Login Page</a>
-			<a href="activitypage.jsp" target="_self">Return to Home</a>
-			
+		<div class="row"  style="text-align:center">
+		<div class="col-sm-12">
+		<a href="login.jsp" target="_self">Return to Login Page</a>&nbsp
+		<a href="activitypage.jsp" target="_self">Return to Home</a>&nbsp
+		</div>
+		</div>
 	</div>
 	
+
 </body>
 </html>
-          
-			

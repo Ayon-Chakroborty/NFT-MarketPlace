@@ -23,9 +23,10 @@ create table if not exists User (
  NFTID int(6) not null auto_increment,
  nftName VARCHAR (250) NOT NULL,
  nftDescription VARCHAR (500) NOT NULL,
- imageURL varchar(250) not null,
+ imageURL varchar(500) not null,
  nftOwner varchar(100) not null,
- primary key(NFTID, nftName),
+ primary key(NFTID),
+ Unique(nftName),
  foreign key(nftOwner) references User(email)
  );
  
@@ -37,6 +38,7 @@ create table if not exists User (
  price decimal(65,2) not null,
  datePosted date not null,
  endingDate date not null,
+ nftSold tinyint,
  primary key(listID),
  foreign key(nftListed) references NFT(NFTID),
  foreign key(nftSeller) references User(email)

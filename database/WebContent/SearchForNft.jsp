@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%
+	boolean doesNftExist = Boolean.TRUE == request.getAttribute("doesNftExist");
+	boolean doesSaleListingExist = Boolean.TRUE == request.getAttribute("saleListingExists");
+	boolean isDateWithinBuyingTime = Boolean.TRUE == request.getAttribute("dateWithinListingDateRange");
+	System.out.println("Date within time:" + isDateWithinBuyingTime);
+	boolean doesUserHaveEnoughFunds = Boolean.TRUE == request.getAttribute("canUserBuyNft");
+	
+	System.out.println("In SearchForNft.jsp");
+	System.out.println("doesNftExist: " + doesNftExist);
+	System.out.println("doesSaleListingExist: " + doesSaleListingExist);
+	System.out.println("isDateWithinBuyingTime: " + isDateWithinBuyingTime);
+	System.out.println("doesUserHaveEnoughFunds: " + doesUserHaveEnoughFunds);
+
+
+%>       
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,36 +30,77 @@
 		<form class="d-flex justify-content-center h-100" action="searchNft">
 			<input class="form-control" type="text" name="nftName" placeholder="Search">
 			<span class="input-group-btn">
-				<button class="btn btn-success" type="submit">Search</button>
+				<button class="btn btn-success" type="submit" onClick="checkBuyNft()">Search</button>
 			</span>
 		</form>
+		
 		<div class="container"></div>	
 		<div class="container"></div>	
+		
+		<% if (doesNftExist == true){ %>
 		<div class="container">
 		  <div class="row">
-		    <div class="span4"></div>
-<<<<<<< HEAD
-		    <div class="span4"><img class="center-block" src="${nfttest.getImageLink()}"></div>
-		    <div class="span4">
-		    	<h3>NFT Name: ${nfttest.getNFTname()}</h3>
-		    	<h3>NFT Owner: ${nfttest.getNFTOwner()}</h3>
-		    	<h3>NFT Description: ${nfttest.getNFTDescription()}</h3>		    	
-=======
-		    <div class="span4"><img class="center-block" src="${nftInfo.getImageLink()}"></div>
-		    <div class="span4">
-		    	<h3>NFT Name: ${nftInfo.getNFTname()}</h3>
-		    	<h3>NFT Owner: ${nftInfo.getNFTOwner()}</h3>
-		    	<h3>NFT Description: ${nftInfo.getNFTDescription()}</h3>		    	
->>>>>>> c906e47e70d0acbd4f07694b263e8378a610f72c
+		    <div class="col-sm-4"></div>
+		    <div class="col-sm-4">
+		    <div style="object-fit: contain;">
+		    <img style="padding-top: 3em" class="center-block" src="${nftInfo.getImageLink()}">
 		    </div>
+		    </div>
+		    <div class="col-sm4"></div>
 		  </div>
+		  <div class="row">
+		    <div class="col-sm-4"></div>
+		    <div class="col-sm-8">
+		    	<h5>NFT Name: ${nftInfo.getNFTname()}</h5>
+		    	<h5>NFT Owner: ${nftInfo.getNFTOwner()}</h5>
+		    	<h5>NFT Description: ${nftInfo.getNFTDescription() }</h5>
+		    </div>	    	
+		    </div>
+	 <% if (doesSaleListingExist == true) { %>
+		    	<% if (isDateWithinBuyingTime == true) { %>
+					 <div class="row">
+					    <div class="col-sm-4"></div>
+					    <div class="col-sm-8">
+					    	<h5>NFT Price ETH: ${saleListing.getPrice()}</h5>
+					    </div>	    	
+				    </div>
+		    		<% if (doesUserHaveEnoughFunds == true) { %>
+					    <div class="row">
+					    	<form action="buyNft">
+					    		<input type=hidden name="nftName" value="${nftInfo.getNFTname()}">
+					    		<button class="btn btn-success" type="submit" id="buyNftButton">Buy NFT</button>
+					    	</form>
+					    </div>
+					
+					<% } else { %>
+						 <div class="row">
+					    		<button class="btn btn-secondary" dissabled>Not Enough Funds To Buy NFT</button>
+					    </div>
+					<% } %>
+				<% } %>
+		  	
+		  	<% } %>
+		  <% } else { %>
+		  <div class="container">
+		  	<div class="row"> 
+		  		<div class="col-sm-12">
+		  			<div class="text-center"> 
+		  				<h5 style="padding: 3em 4em">Please Search For An NFT.</h5>
+		  			</div>
+		  		</div>
+		  	</div>
+		  </div>
+		  <% } %>
+		  
+		</div>
+		<div class="row"  style="text-align:center">
+		<div class="col-sm-12">
+		<a href="login.jsp" target="_self">Return to Login Page</a>&nbsp
+		<a href="activitypage.jsp" target="_self">Return to Home</a>&nbsp
+		</div>
 		</div>
 	</div>
+	
+
 </body>
-<<<<<<< HEAD
 </html>
-          
-			
-=======
-</html>
->>>>>>> c906e47e70d0acbd4f07694b263e8378a610f72c
