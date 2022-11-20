@@ -25,9 +25,12 @@ create table if not exists User (
  nftDescription VARCHAR (500) NOT NULL,
  imageURL varchar(500) not null,
  nftOwner varchar(100) not null,
+ createdBy varchar(100) not null,
+ dateCreated date not null,
  primary key(NFTID),
  Unique(nftName),
- foreign key(nftOwner) references User(email)
+ foreign key(nftOwner) references User(email),
+ foreign key(createdBy) references User(email)
  );
  
  drop table if exists Sale_Listings;

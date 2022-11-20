@@ -94,6 +94,12 @@ public class ControlServlet extends HttpServlet {
         	case "/buyNft":
         		System.out.println("In case buyNft");
         		buyNft(request, response);
+        	case "/renderNftPage":
+        		System.out.println("In case renderNftPage()");
+        		renderNftPage(request, response);
+        	case "/listAllMinted":
+        		System.out.println("In case listAllMinted");
+        		listAllMinted(request, response);
 	    	}
 	    }
 	    catch(Exception ex) {
@@ -187,11 +193,24 @@ public class ControlServlet extends HttpServlet {
 	   	 	String nftDescription = request.getParameter("nftDescription");
 	   	 	String imageURL = request.getParameter("imageURL");
 	   	 	String nftOwner = (String) session.getAttribute("username");
-            nft nfts = new nft(nftName, nftDescription, nftOwner, imageURL);
+	   	 	String createdBy = (String) session.getAttribute("username");
+	   	 	LocalDate curDate = LocalDate.now();
+	   	 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+	   	 	String currentDate = dtf.format(curDate);
+            nft nfts = new nft(nftName, nftDescription, nftOwner, createdBy, currentDate, imageURL);
             nftDAO.insert(nfts);
    	 		System.out.println("MINTING SUCCESS! Added to database");
    	 		response.sendRedirect("activitypage.jsp");
 	    }    
+	    
+	    private void listAllMinted(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	        System.out.println("In listAllMinted() in ControlServerlet.java");
+	    	List<nft> listAllMinted = nftDAO.listAllNftsMinted(currentUser);
+	    	System.out.println(listAllMinted.size());
+	        request.setAttribute("listAllNftsMinted", listAllMinted);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("listAllNftsMinted.jsp");       
+	        dispatcher.forward(request, response);
+	    }
 	    
 	    private void listSale(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	    	System.out.print("In listSale() in ControlServerlet.java");
@@ -240,7 +259,7 @@ public class ControlServlet extends HttpServlet {
 	    		System.out.println("NFT EXISTS!");
 		    	nft nfts = nftDAO.getNftInfoByName(nftToSearch);
 		    	System.out.println("NFT ID: " + nfts.getNftId());
-		    	request.setAttribute("nftInfo", nfts);
+		    	session.setAttribute("nftInfo", nfts);
 		    	request.setAttribute("doesNftExist", doesNftExist);
             	user currUser = userDAO.getUser(currentUser);
             	
@@ -280,6 +299,57 @@ public class ControlServlet extends HttpServlet {
 	    		String page = "/SearchForNft.jsp";
 	            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
 	            requestDispatcher.forward(request, response);
+	    	
+	    	
+	    }
+	    
+	    private void renderNftPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
+	    	System.out.println("In renderNftPage in ControlServerlet.java");
+	    	
+	    	request.setAttribute("doesNftExist", true);
+    		System.out.println("NFT EXISTS!");
+	    	nft nfts = (nft) session.getAttribute("nftInfo");
+	    	
+	    	System.out.println("NFT ID: " + nfts.getNftId());
+	    	request.setAttribute("nftInfo2", nfts);
+        	user currUser = userDAO.getUser(currentUser);
+        	
+	    	Boolean doesSaleListingExist = saleListingDAO.doesSaleListingExist(nfts.getNftId());
+	    	System.out.println("Does Sale Listing Exist: " + doesSaleListingExist);
+	    	
+	    	if (doesSaleListingExist == true) {
+		    	request.setAttribute("saleListingExists", doesSaleListingExist);
+	    		System.out.println("In sale listing exists true clause");
+		    	//get Sale Listing end date and compare to current date. Only pass values if the current date is before the end date
+	    		saleListing currSaleListing = saleListingDAO.getSaleListingInfoByName(nfts.getNftId());
+        		request.setAttribute("saleListing", currSaleListing);
+
+		    	if (!(currUser.getEmail().equals(currSaleListing.getNftSeller()))) {
+		    		System.out.println("This is check Date: " + currSaleListing.getEndingDate());
+		            LocalDate currentDate = LocalDate.now();
+		            System.out.println(currentDate.toString());
+		            LocalDate endingDate = LocalDate.parse(currSaleListing.getEndingDate());
+		            System.out.println(endingDate.toString());
+		            
+		            if (currentDate.isBefore(endingDate) || currentDate.isEqual(endingDate)) {
+		            	System.out.println("Date is within the buying Range");
+		            	boolean dateWithinListingDateRange = true;
+		            	request.setAttribute("dateWithinListingDateRange", dateWithinListingDateRange);
+		            	if (currUser.getBalance() >= currSaleListing.getPrice()) {
+		            		boolean canUserBuyNft = true;
+		            		request.setAttribute("canUserBuyNft", canUserBuyNft);
+		            		
+		            	}
+		            	
+		            }
+		    	}
+	    	}
+
+		    	
+	    	
+    		String page = "/nftPage.jsp";
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+            requestDispatcher.forward(request, response);
 	    	
 	    	
 	    }

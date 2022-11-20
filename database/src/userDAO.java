@@ -98,9 +98,10 @@ public class userDAO
             String address_zip_code = resultSet.getString("address_zip_code"); 
             double balance = resultSet.getDouble("balance");
              
-           user users = new user(email,password, firstName, lastName, birthday, address,  address_city, address_state ,address_zip_code, 100);
+           user users = new user(email,password, firstName, lastName, birthday, address,  address_city, address_state ,address_zip_code, balance);
         listUser.add(users);
-        }        
+        }   
+        
         resultSet.close();
         disconnect();        
         return listUser;

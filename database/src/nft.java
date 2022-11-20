@@ -2,15 +2,38 @@ import javax.imageio.ImageIO;
 
 
 public class nft {
-	int nftId;
-	String NFTname;
-	String NFTDescription;
-	String NFTOwner;
-	String ImageLink;
+	protected int nftId;
+	protected String NFTname;
+	protected String NFTDescription;
+	protected String NFTOwner;
+	protected String createdBy;
+	protected String dateCreated;
+	protected String ImageLink;
 
 	
 	
+	public nft(String nFTname, String nFTDescription, String nFTOwner, String createdBy, String dateCreated, String imageLink) {
+		super();
+		NFTname = nFTname;
+		NFTDescription = nFTDescription;
+		NFTOwner = nFTOwner;
+		this.createdBy = createdBy;
+		this.dateCreated = dateCreated;
+		ImageLink = imageLink;
+	}
 	
+	public nft(int nftId, String nFTname, String nFTDescription, String nFTOwner, String createdBy, String dateCreated,
+			String imageLink) {
+		super();
+		this.nftId = nftId;
+		NFTname = nFTname;
+		NFTDescription = nFTDescription;
+		NFTOwner = nFTOwner;
+		this.createdBy = createdBy;
+		this.dateCreated = dateCreated;
+		ImageLink = imageLink;
+	}
+
 	public nft(int nftId, String nFTname, String nFTDescription, String nFTOwner, String imageLink) {
 		super();
 		this.nftId = nftId;
@@ -31,9 +54,6 @@ public class nft {
 		super();
 		NFTname = nFTname;
 	}
-	
-	
-	
 		
 	public int getNftId() {
 		return nftId;
@@ -66,6 +86,22 @@ public class nft {
 	}
 	public void setImageLink(String imageLink) {
 		ImageLink = imageLink;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 	
 	

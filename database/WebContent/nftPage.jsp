@@ -8,7 +8,7 @@
 	System.out.println("Date within time:" + isDateWithinBuyingTime);
 	boolean doesUserHaveEnoughFunds = Boolean.TRUE == request.getAttribute("canUserBuyNft");
 	
-	System.out.println("In SearchForNft.jsp");
+	System.out.println("In nftPage.jsp");
 	System.out.println("doesNftExist: " + doesNftExist);
 	System.out.println("doesSaleListingExist: " + doesSaleListingExist);
 	System.out.println("isDateWithinBuyingTime: " + isDateWithinBuyingTime);
@@ -27,10 +27,10 @@
 <body>	
 	<div class="container"></div>	
 	<div class="container">
-		<form class="d-flex justify-content-center h-100" action="searchNft">
-			<input class="form-control" type="text" name="nftName" placeholder="Search">
+		<form class="d-flex justify-content-center h-100" action="renderNftPage">
+			<input name="nftName" placeholder="Search" type="hidden">
 			<span class="input-group-btn">
-				<button class="btn btn-success" type="submit" onClick="checkBuyNft()">Search</button>
+				<button class="btn btn-success" type="submit">Get NFT INFO</button>
 			</span>
 		</form>
 		
@@ -38,53 +38,48 @@
 		<div class="container"></div>	
 		
 		<% if (doesNftExist == true){ %>
-			<div class="container">
-			  <div class="row"> 
-			  	<a  style="padding-top: 3em" class="center-block" href="nftPage.jsp" target="_self">
-			  		NFT FOUND! CLICK HERE FOR MORE INFORMATION ON ${nftInfo.getNFTname()}
-		  		</a>
-			  </div>
-			  <div class="row">
-			    <div class="col-sm-4"></div>
-			    <div class="col-sm-4">
-			    <div style="object-fit: contain;">
-			    <img style="padding-top: 3em" class="center-block" src="${nftInfo.getImageLink()}">
-			    </div>
-			    </div>
-			    <div class="col-sm4"></div>
-			  </div>
-			  <div class="row">
-			    <div class="col-sm-4"></div>
-			    <div class="col-sm-8">
-			    	<h5>NFT Name: ${nftInfo.getNFTname()}</h5>
-			    	<h5>NFT Owner: ${nftInfo.getNFTOwner()}</h5>
-			    	<h5>NFT Description: ${nftInfo.getNFTDescription() }</h5>
-			    </div>	    	
-			    </div>
-		 <% if (doesSaleListingExist == true) { %>
-			    	<% if (isDateWithinBuyingTime == true) { %>
-						 <div class="row">
-						    <div class="col-sm-4"></div>
-						    <div class="col-sm-8">
-						    	<h5>NFT Price ETH: ${saleListing.getPrice()}</h5>
-						    </div>	    	
+		<div class="container">
+		  <div class="row">
+		    <div class="col-sm-4"></div>
+		    <div class="col-sm-4">
+		    <div style="object-fit: contain;">
+		    <img style="padding-top: 3em" class="center-block" src="${nftInfo2.getImageLink()}">
+		    </div>
+		    </div>
+		    <div class="col-sm4"></div>
+		  </div>
+		  <div class="row">
+		    <div class="col-sm-4"></div>
+		    <div class="col-sm-8">
+		    	<h5>NFT Name: ${nftInfo2.getNFTname()}</h5>
+		    	<h5>NFT Owner: ${nftInfo2.getNFTOwner()}</h5>
+		    	<h5>NFT Description: ${nftInfo2.getNFTDescription() }</h5>
+		    </div>	    	
+		    </div>
+	 <% if (doesSaleListingExist == true) { %>
+		    	<% if (isDateWithinBuyingTime == true) { %>
+					 <div class="row">
+					    <div class="col-sm-4"></div>
+					    <div class="col-sm-8">
+					    	<h5>NFT Price ETH: ${saleListing.getPrice()}</h5>
+					    </div>	    	
+				    </div>
+		    		<% if (doesUserHaveEnoughFunds == true) { %>
+					    <div class="row">
+					    	<form action="buyNft">
+					    		<input type=hidden name="nftName" value="${nftInfo.getNFTname()}">
+					    		<button class="btn btn-success" type="submit" id="buyNftButton">Buy NFT</button>
+					    	</form>
 					    </div>
-			    		<% if (doesUserHaveEnoughFunds == true) { %>
-						    <div class="row">
-						    	<form action="buyNft">
-						    		<input type=hidden name="nftName" value="${nftInfo.getNFTname()}">
-						    		<button class="btn btn-success" type="submit" id="buyNftButton">Buy NFT</button>
-						    	</form>
-						    </div>
-						
-						<% } else { %>
-							 <div class="row">
-						    		<button class="btn btn-secondary" dissabled>Not Enough Funds To Buy NFT</button>
-						    </div>
-						<% } %>
+					
+					<% } else { %>
+						 <div class="row">
+					    		<button class="btn btn-secondary" dissabled>Not Enough Funds To Buy NFT</button>
+					    </div>
 					<% } %>
-			  	
-			  	<% } %>
+				<% } %>
+		  	
+		  	<% } %>
 		  <% } else { %>
 		  <div class="container">
 		  	<div class="row"> 
