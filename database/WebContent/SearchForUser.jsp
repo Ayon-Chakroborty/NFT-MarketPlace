@@ -35,7 +35,7 @@
 		    <div class="col-sm-4"></div>
 		    <div class="col-sm-4">
 		    <div style="object-fit: contain;">
-		    <img style="padding-top: 3em" class="center-block" src="${nftInfo.getImageLink()}">
+		   
 		    </div>
 		    </div>
 		    <div class="col-sm4"></div>
@@ -45,7 +45,25 @@
 		    <div class="col-sm-8">
 		    	<h5>User: ${userInfo.getEmail()}</h5>
 		    	<h5>Balance: ${userInfo.getBalance()}</h5>
-		    	
+		    	<table border="1" cellpadding="6">
+            <caption><h2>List of NFTs Minted</h2></caption>
+            <tr>
+                <th>NFT Name</th>
+                <th>NFT Description</th>
+                <th>Current Owner</th>
+               
+
+            </tr>
+            <c:forEach var="nfts" items="${listAllNFTs}">
+                <tr style="text-align:center">
+                    <td><c:out value="${nfts.getNFTname()}" /></td>
+                    <td><c:out value="${nfts.getNFTDescription()}" /></td>
+                    <td><c:out value="${nfts.getNFTOwner()}" /></td>
+                   
+       
+                    
+            </c:forEach>
+        </table>
 		    </div>	    	
 		    </div>
 		  <% } %><%  else { %>

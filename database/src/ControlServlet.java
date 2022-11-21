@@ -299,12 +299,14 @@ public class ControlServlet extends HttpServlet {
 	    	if (doesUserExist == true) {
 	    		System.out.println("User EXISTS!");
 		    	user user = userDAO.getUser(UserToSearch);
+		    	List<nft> listAllMinted = nftDAO.listAllNFTs(UserToSearch);
 		    	System.out.println("User ID: " + userDAO.getUser(UserToSearch));
 		    	request.setAttribute("userInfo", user);
 		    	request.setAttribute("doesUserExist", doesUserExist);
-            	
-  	
+		    	request.setAttribute("listAllNFTs", listAllMinted);   
+		    	
 	    	}
+	    	
 	    		String page = "/SearchForUser.jsp";
 	            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
 	            requestDispatcher.forward(request, response);
