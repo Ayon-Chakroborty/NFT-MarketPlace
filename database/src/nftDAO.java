@@ -130,5 +130,63 @@ public class nftDAO {
 			return listAllNftsMinted;
     	
     }
+    
+    public List<nft> listAllNftsPurchased(String currentUser) throws SQLException{
+    	System.out.println("In listAllNftsPurchased in nftDAO class");
+    	connect_func();         
+		List<nft> listAllNftsPurchased = new ArrayList<nft>();
+		String sql = "select * from NFT inner join sale_orders on NFT.NFTID=sale_orders.nftToBeSold and sale_orders.soldTo=" + "\"" + currentUser + "\"";
+		
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		resultSet = preparedStatement.executeQuery();
+		int count = 0;
+		while(resultSet.next()) {
+			count++;
+			String nftName = resultSet.getString("nftName");
+			String nftDescription = resultSet.getString("nftDescription");
+			String imageUrl = resultSet.getString("imageUrl");
+			String nftOwner = resultSet.getString("nftOwner");
+			String createdBy = resultSet.getString("createdBy");
+			Date dateCreated = resultSet.getDate("dateCreated");
+
+			nft nfts = new nft(nftName, nftDescription, nftOwner, createdBy, dateCreated.toString(), imageUrl);
+			listAllNftsPurchased.add(nfts);
+		}
+		if (count == 0) {
+			return null;
+		}
+		else
+			return listAllNftsPurchased;
+    	
+    }
+    
+    public List<nft> listAllNftsSold(String currentUser) throws SQLException{
+    	System.out.println("In listAllNftsPurchased in nftDAO class");
+    	connect_func();         
+		List<nft> listAllNftsSold = new ArrayList<nft>();
+		String sql = "select * from NFT inner join sale_orders on NFT.NFTID=sale_orders.nftToBeSold and sale_orders.nftSeller=" + "\"" + currentUser + "\"";
+		
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		resultSet = preparedStatement.executeQuery();
+		int count = 0;
+		while(resultSet.next()) {
+			count++;
+			String nftName = resultSet.getString("nftName");
+			String nftDescription = resultSet.getString("nftDescription");
+			String imageUrl = resultSet.getString("imageUrl");
+			String nftOwner = resultSet.getString("nftOwner");
+			String createdBy = resultSet.getString("createdBy");
+			Date dateCreated = resultSet.getDate("dateCreated");
+
+			nft nfts = new nft(nftName, nftDescription, nftOwner, createdBy, dateCreated.toString(), imageUrl);
+			listAllNftsSold.add(nfts);
+		}
+		if (count == 0) {
+			return null;
+		}
+		else
+			return listAllNftsSold;
+    	
+    }
 
 }

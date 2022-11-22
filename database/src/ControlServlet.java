@@ -100,6 +100,12 @@ public class ControlServlet extends HttpServlet {
         	case "/listAllMinted":
         		System.out.println("In case listAllMinted");
         		listAllMinted(request, response);
+        	case "/listAllPurchased":
+        		System.out.println("In case listAllPurchased");
+        		listAllPurchased(request, response);
+        	case "/listAllSold":
+        		System.out.println("In case listAllSold");
+        		listAllSold(request, response);
 	    	}
 	    }
 	    catch(Exception ex) {
@@ -203,10 +209,25 @@ public class ControlServlet extends HttpServlet {
    	 		response.sendRedirect("activitypage.jsp");
 	    }    
 	    
-	    private void listAllMinted(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    private void listAllPurchased(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	        System.out.println("In listAllMinted() in ControlServerlet.java");
+	    	List<nft> listAllPurchased = nftDAO.listAllNftsPurchased(currentUser);
+	        request.setAttribute("listAllNftsPurchased", listAllPurchased);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("listAllNftsPurchased.jsp");       
+	        dispatcher.forward(request, response);
+	    }
+	    
+	    private void listAllSold(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	        System.out.println("In listAllMinted() in ControlServerlet.java");
+	    	List<nft> listAllSold = nftDAO.listAllNftsSold(currentUser);
+	        request.setAttribute("listAllNftsSold", listAllSold);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("listAllNftsSold.jsp");       
+	        dispatcher.forward(request, response);
+	    }
+	    
+	    private void listAllMinted(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	        System.out.println("In listAllPurchased() in ControlServerlet.java");
 	    	List<nft> listAllMinted = nftDAO.listAllNftsMinted(currentUser);
-	    	System.out.println(listAllMinted.size());
 	        request.setAttribute("listAllNftsMinted", listAllMinted);       
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("listAllNftsMinted.jsp");       
 	        dispatcher.forward(request, response);
