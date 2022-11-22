@@ -103,6 +103,32 @@ public class nftDAO {
     	return false;
     }
     
+    public List<nft> listAllNFTs(String userName) throws SQLException {
+        List<nft> listUser = new ArrayList<nft>();        
+        String sql = "select * from NFT where nftOwner=" + "\"" + userName + "\""; ;      
+        connect_func();      
+        statement = (Statement) connect.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        int nftId = 0;
+		String nftDescription = null;
+		String nftImageUrl = null;
+		String nftOwner = null;
+		String nftName = null;
+        while (resultSet.next()) {
+        	nftId = resultSet.getInt("nftID");
+        	nftName = resultSet.getString("nftName");
+			nftDescription = resultSet.getString("nftDescription");
+			nftImageUrl = resultSet.getString("imageUrl");
+			nftOwner = resultSet.getString("nftOwner");
+             
+           nft nft = new nft(nftId, nftName, nftDescription,nftOwner, nftImageUrl);
+        listUser.add(nft);
+        }        
+        resultSet.close();
+        disconnect();        
+        return listUser;
+    }
+    
     public List<nft> listAllNftsMinted(String currentUser) throws SQLException{
     	System.out.println("In listAllNftsMinted in nftDAO class");
     	connect_func();         

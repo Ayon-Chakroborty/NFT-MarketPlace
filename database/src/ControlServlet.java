@@ -91,21 +91,30 @@ public class ControlServlet extends HttpServlet {
         		System.out.println("In case searchNft");
         		searchNft(request, response);
         		break;
+        	case "/searchUser":
+        		System.out.println("In case searchUser");
+        		searchUser(request, response);
+        		break;
         	case "/buyNft":
         		System.out.println("In case buyNft");
         		buyNft(request, response);
+        		break;
         	case "/renderNftPage":
         		System.out.println("In case renderNftPage()");
         		renderNftPage(request, response);
+        		break;
         	case "/listAllMinted":
         		System.out.println("In case listAllMinted");
         		listAllMinted(request, response);
+        		break;
         	case "/listAllPurchased":
         		System.out.println("In case listAllPurchased");
         		listAllPurchased(request, response);
+        		break;
         	case "/listAllSold":
         		System.out.println("In case listAllSold");
         		listAllSold(request, response);
+        		break;
 	    	}
 	    }
 	    catch(Exception ex) {
@@ -371,6 +380,31 @@ public class ControlServlet extends HttpServlet {
     		String page = "/nftPage.jsp";
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
             requestDispatcher.forward(request, response);
+	    	
+	    	
+	    }
+	    
+	    private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
+	    	System.out.println("In searchNft() in ControlServerlet.java");
+	    	
+	    	String UserToSearch = request.getParameter("userName");
+	    	Boolean doesUserExist = userDAO.doesUserExist(UserToSearch);
+	    	System.out.println("In searchUser() in ControlServerlet.java");
+	    	System.out.println("doesUserExist: " + String.valueOf(doesUserExist));
+	    	if (doesUserExist == true) {
+	    		System.out.println("User EXISTS!");
+		    	user user = userDAO.getUser(UserToSearch);
+		    	List<nft> listAllMinted = nftDAO.listAllNFTs(UserToSearch);
+		    	System.out.println("User ID: " + userDAO.getUser(UserToSearch));
+		    	request.setAttribute("userInfo", user);
+		    	request.setAttribute("doesUserExist", doesUserExist);
+		    	request.setAttribute("listAllNFTs", listAllMinted);   
+		    	
+	    	}
+	    	
+	    		String page = "/SearchForUser.jsp";
+	            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+	            requestDispatcher.forward(request, response);
 	    	
 	    	
 	    }

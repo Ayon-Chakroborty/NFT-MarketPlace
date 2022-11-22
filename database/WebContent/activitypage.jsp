@@ -30,6 +30,7 @@
 		 	 <a href="TransferPage.jsp" target="_self">Transfer An NFT</a> &nbsp
 		 	 <a href="SearchForNft.jsp" target="_self">Search For An NFT</a> &nbsp		  
 			 <a href="login.jsp"target ="_self" > Logout</a>&nbsp
+			 <a href="SearchForUser.jsp" target="_self">Search For A User</a> &nbsp	
 			 <a href="listAllNftsMinted.jsp" target="_self">List NFTS Minted</a>&nbsp
 			 <a href="listAllNftsPurchased.jsp" target="_self">List NFTS Purchased</a>&nbsp
 			 <a href="listAllNftsSold.jsp" target="_self">List NFTS Sold</a>

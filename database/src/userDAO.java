@@ -256,6 +256,28 @@ public class userDAO
     	return false;
     }
     
+    public Boolean doesUserExist(String userName) throws SQLException {
+    	connect_func();
+    	System.out.println("In doesUserExist() in userDAO class");
+    	
+    	String sqlGetUserID = "select count(email) from User where email=" + "\"" + userName + "\""; //Get the userID from the User Table
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sqlGetUserID);
+		resultSet = preparedStatement.executeQuery();
+		
+    	if(resultSet.next()) {
+    		int count = resultSet.getInt(1);
+    		if (count == 1) {
+    	        resultSet.close();
+    	        preparedStatement.close();
+    	        disconnect();
+    			return true;
+    		}
+    	}
+    	
+        preparedStatement.close();
+    	return false;
+    }
+    
     // works on initialzing DB
     public void init() throws SQLException, FileNotFoundException, IOException{
     	connect_func();
