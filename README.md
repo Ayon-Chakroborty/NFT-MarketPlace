@@ -1,10 +1,10 @@
 # CSC4710Project
 
 ## Ayon Contributions
-### Helped with ER Diagram, Assumptions, implemented database, and implemented registration functionailty 
+### Step 2, 3, 4, 5
 
 ## Jamil Ali contributions
-### Helped with ER Diagram, Assumptions, and implemented root user and login functionaility
+### step 1
 
 ## Hours Working Together: 11 Hours
 
