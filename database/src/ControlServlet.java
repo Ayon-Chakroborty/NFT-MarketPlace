@@ -33,6 +33,7 @@ public class ControlServlet extends HttpServlet {
 	    private saleListingDAO saleListingDAO = new saleListingDAO();
 	    private saleOrderDAO saleOrderDAO = new saleOrderDAO();
 	    private String currentUser;
+	    private int saleListingGlobal=-1;
 	    private HttpSession session=null;
 	    
 	    public ControlServlet()
@@ -115,6 +116,46 @@ public class ControlServlet extends HttpServlet {
         		System.out.println("In case listAllSold");
         		listAllSold(request, response);
         		break;
+        	case "/bigCreators":
+        		System.out.println("In case bigCreators");
+        		bigCreators(request, response);
+        		break;
+        	case "/bigSellers":
+        		System.out.println("In case bigSellers");
+        		bigSellers(request, response);
+        		break;
+        	case "/bigBuyers":
+        		System.out.println("In case bigBuyers");
+        		bigBuyers(request, response);
+        		break;
+        	case "/hotNfts":
+        		System.out.println("In case hotNfts");
+        		hotNfts(request, response);
+        		break;
+        	case "/inactiveUsers":
+        		System.out.println("In case inactiveUsers");
+        		innactiveUsers(request, response);
+        		break;
+        	case "/goodBuyers":
+        		System.out.println("In case goodBuyers");
+        		goodBuyers(request, response);
+        		break;
+        	case "/diamondHands":
+        		System.out.println("In case diamondHands");
+        		diamondHands(request, response);
+        		break;
+        	case "/paperHands":
+        		System.out.println("In case paperHands");
+        		paperHands(request, response);
+        		break;
+        	case "/userStatistics":
+        		System.out.println("In case userStatistics");
+        		userStatistics(request, response);
+        		break;
+        	case "/commonNfts":
+        		System.out.println("In case commonNfts");
+        		commonNfts(request, response);
+        		break;
 	    	}
 	    }
 	    catch(Exception ex) {
@@ -122,6 +163,110 @@ public class ControlServlet extends HttpServlet {
 	    	}
 	    }
 	   
+
+		private void commonNfts(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	    	System.out.println("In commonNfts() in ControlServerlet.java");
+	    	String user1 = request.getParameter("user1");
+	    	String user2 = request.getParameter("user2");
+	    	Boolean doesUserExist = userDAO.doesUserExist(user1);
+	    	Boolean doesUserExist2 = userDAO.doesUserExist(user2);
+	    	if(doesUserExist == true && doesUserExist2 == true) {
+		    	List<nft> commonNfts = userDAO.commonNfts(user1, user2);	        
+		    	request.setAttribute("commonNfts", commonNfts); 
+		    	request.setAttribute("doesUserExist", doesUserExist);
+
+	    	}
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("CommonNfts.jsp");       
+	        dispatcher.forward(request, response);
+		}
+
+		private void userStatistics(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	System.out.println("In userStatistics() in ControlServerlet.java");
+	    	String UserToSearch = request.getParameter("userName");
+	    	Boolean doesUserExist = userDAO.doesUserExist(UserToSearch);
+	    	System.out.println("doesUserExist: " + String.valueOf(doesUserExist));
+	    	if(doesUserExist == true) {
+		    	List<userStatistics> listUserStatistics = userDAO.listUserStatistics(UserToSearch);	        
+		    	request.setAttribute("listUserStatistics", listUserStatistics); 
+		    	request.setAttribute("doesUserExist", doesUserExist);
+
+	    	}
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("UserStatistics.jsp");       
+	        dispatcher.forward(request, response);
+			
+		}
+
+		private void paperHands(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	        System.out.println("In paperHands() in ControlServerlet.java");
+	    	List<user> listPaperHands = saleOrderDAO.listPaperHands();
+	        request.setAttribute("listPaperHands", listPaperHands);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("PaperHands.jsp");       
+	        dispatcher.forward(request, response);
+			
+		}
+
+		private void diamondHands(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	        System.out.println("In diamondHands() in ControlServerlet.java");
+	    	List<user> listDiamondHands = saleOrderDAO.listDiamondHands();
+	        request.setAttribute("listDiamondHands", listDiamondHands);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("DiamondHands.jsp");       
+	        dispatcher.forward(request, response);
+			
+		}
+
+		private void goodBuyers(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	        System.out.println("In goodBuyers() in ControlServerlet.java");
+	    	List<user> listAllGoodBuyers = saleOrderDAO.listAllGoodBuyers();
+	        request.setAttribute("listAllGoodBuyers", listAllGoodBuyers);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("GoodBuyers.jsp");       
+	        dispatcher.forward(request, response);
+			
+		}
+
+		private void innactiveUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	        System.out.println("In bigBuyers() in ControlServerlet.java");
+	    	List<user> listAllInactiveUsers = userDAO.listInactiveUsers();
+	        request.setAttribute("listAllInactiveUsers", listAllInactiveUsers);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("InactiveUsers.jsp");       
+	        dispatcher.forward(request, response);
+			
+		}
+
+		private void hotNfts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	        System.out.println("In hotNfts() in ControlServerlet.java");
+	    	List<nft> listAllHotNfts = nftDAO.listHotNfts();
+	        request.setAttribute("listAllHotNfts", listAllHotNfts);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("HotNfts.jsp");       
+	        dispatcher.forward(request, response);
+			
+		}
+
+
+		private void bigBuyers(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	        System.out.println("In bigBuyers() in ControlServerlet.java");
+	    	List<user> listAllBigBuyers = saleOrderDAO.listAllBigBuyers();
+	        request.setAttribute("listAllBigBuyers", listAllBigBuyers);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("bigBuyers.jsp");       
+	        dispatcher.forward(request, response);
+			
+		}
+
+		private void bigSellers(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	        System.out.println("In bigSellers() in ControlServerlet.java");
+	    	List<user> listAllBigSellers = saleOrderDAO.listAllBigSellers();
+	        request.setAttribute("listAllBigSellers", listAllBigSellers);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("bigSellers.jsp");       
+	        dispatcher.forward(request, response);
+			
+		}
+
+		private void bigCreators(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	        System.out.println("In bigCreators() in ControlServerlet.java");
+	    	List<user> listAllBigCreators = nftDAO.listAllBigCreators();
+	        request.setAttribute("listAllBigCreators", listAllBigCreators);       
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("bigCreators.jsp");       
+	        dispatcher.forward(request, response);
+		}
 
 		private void listUser(HttpServletRequest request, HttpServletResponse response)
 	            throws SQLException, IOException, ServletException {
@@ -219,7 +364,7 @@ public class ControlServlet extends HttpServlet {
 	    }    
 	    
 	    private void listAllPurchased(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-	        System.out.println("In listAllMinted() in ControlServerlet.java");
+	        System.out.println("In listAllPurchased() in ControlServerlet.java");
 	    	List<nft> listAllPurchased = nftDAO.listAllNftsPurchased(currentUser);
 	        request.setAttribute("listAllNftsPurchased", listAllPurchased);       
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("listAllNftsPurchased.jsp");       
@@ -227,7 +372,7 @@ public class ControlServlet extends HttpServlet {
 	    }
 	    
 	    private void listAllSold(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-	        System.out.println("In listAllMinted() in ControlServerlet.java");
+	        System.out.println("In listAllSold() in ControlServerlet.java");
 	    	List<nft> listAllSold = nftDAO.listAllNftsSold(currentUser);
 	        request.setAttribute("listAllNftsSold", listAllSold);       
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("listAllNftsSold.jsp");       
@@ -235,7 +380,7 @@ public class ControlServlet extends HttpServlet {
 	    }
 	    
 	    private void listAllMinted(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-	        System.out.println("In listAllPurchased() in ControlServerlet.java");
+	        System.out.println("In listAllMinted() in ControlServerlet.java");
 	    	List<nft> listAllMinted = nftDAO.listAllNftsMinted(currentUser);
 	        request.setAttribute("listAllNftsMinted", listAllMinted);       
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("listAllNftsMinted.jsp");       
@@ -292,38 +437,6 @@ public class ControlServlet extends HttpServlet {
 		    	session.setAttribute("nftInfo", nfts);
 		    	request.setAttribute("doesNftExist", doesNftExist);
             	user currUser = userDAO.getUser(currentUser);
-            	
-		    	Boolean doesSaleListingExist = saleListingDAO.doesSaleListingExist(nfts.getNftId());
-		    	System.out.println("Does Sale Listing Exist: " + doesSaleListingExist);
-		    	
-		    	if (doesSaleListingExist == true) {
-			    	request.setAttribute("saleListingExists", doesSaleListingExist);
-		    		System.out.println("In sale listing exists true clause");
-			    	//get Sale Listing end date and compare to current date. Only pass values if the current date is before the end date
-		    		saleListing currSaleListing = saleListingDAO.getSaleListingInfoByName(nfts.getNftId());
-            		request.setAttribute("saleListing", currSaleListing);
-
-			    	if (!(currUser.getEmail().equals(currSaleListing.getNftSeller()))) {
-			    		System.out.println("This is check Date: " + currSaleListing.getEndingDate());
-			            LocalDate currentDate = LocalDate.now();
-			            System.out.println(currentDate.toString());
-			            LocalDate endingDate = LocalDate.parse(currSaleListing.getEndingDate());
-			            System.out.println(endingDate.toString());
-			            
-			            if (currentDate.isBefore(endingDate) || currentDate.isEqual(endingDate)) {
-			            	System.out.println("Date is within the buying Range");
-			            	boolean dateWithinListingDateRange = true;
-			            	request.setAttribute("dateWithinListingDateRange", dateWithinListingDateRange);
-			            	if (currUser.getBalance() >= currSaleListing.getPrice()) {
-			            		boolean canUserBuyNft = true;
-			            		request.setAttribute("canUserBuyNft", canUserBuyNft);
-			            		
-			            	}
-			            	
-			            }
-			    	}
-		    	}
-
 		    	
 	    	}
 	    		String page = "/SearchForNft.jsp";
@@ -344,16 +457,17 @@ public class ControlServlet extends HttpServlet {
 	    	request.setAttribute("nftInfo2", nfts);
         	user currUser = userDAO.getUser(currentUser);
         	
-	    	Boolean doesSaleListingExist = saleListingDAO.doesSaleListingExist(nfts.getNftId());
+	    	saleListing doesSaleListingExist = saleListingDAO.doesSaleListingExist(nfts.getNftId());
 	    	System.out.println("Does Sale Listing Exist: " + doesSaleListingExist);
 	    	
-	    	if (doesSaleListingExist == true) {
+	    	if (doesSaleListingExist != null) {
 		    	request.setAttribute("saleListingExists", doesSaleListingExist);
+		    	
 	    		System.out.println("In sale listing exists true clause");
 		    	//get Sale Listing end date and compare to current date. Only pass values if the current date is before the end date
-	    		saleListing currSaleListing = saleListingDAO.getSaleListingInfoByName(nfts.getNftId());
+	    		saleListing currSaleListing = doesSaleListingExist;
         		request.setAttribute("saleListing", currSaleListing);
-
+        		saleListingGlobal = currSaleListing.getListId();
 		    	if (!(currUser.getEmail().equals(currSaleListing.getNftSeller()))) {
 		    		System.out.println("This is check Date: " + currSaleListing.getEndingDate());
 		            LocalDate currentDate = LocalDate.now();
@@ -367,6 +481,7 @@ public class ControlServlet extends HttpServlet {
 		            	request.setAttribute("dateWithinListingDateRange", dateWithinListingDateRange);
 		            	if (currUser.getBalance() >= currSaleListing.getPrice()) {
 		            		boolean canUserBuyNft = true;
+		            		//session.setAttribute("listIdForSale", doesSaleListingExist.get);
 		            		request.setAttribute("canUserBuyNft", canUserBuyNft);
 		            		
 		            	}
@@ -385,11 +500,9 @@ public class ControlServlet extends HttpServlet {
 	    }
 	    
 	    private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
-	    	System.out.println("In searchNft() in ControlServerlet.java");
-	    	
+	    	System.out.println("In searchUser() in ControlServerlet.java");
 	    	String UserToSearch = request.getParameter("userName");
 	    	Boolean doesUserExist = userDAO.doesUserExist(UserToSearch);
-	    	System.out.println("In searchUser() in ControlServerlet.java");
 	    	System.out.println("doesUserExist: " + String.valueOf(doesUserExist));
 	    	if (doesUserExist == true) {
 	    		System.out.println("User EXISTS!");
@@ -416,9 +529,9 @@ public class ControlServlet extends HttpServlet {
 	    	
 	    	// get current user's name
 	   	 	String nftBuyer = (String) session.getAttribute("username");
-
+	   	 	int listID = saleListingGlobal;
 	    	String nftToSearch = request.getParameter("nftName");
-	    	saleOrder saleOrders = saleOrderDAO.createSaleOrderByNftName(nftToSearch, nftBuyer);
+	    	saleOrder saleOrders = saleOrderDAO.createSaleOrderByNftName(nftToSearch, nftBuyer, listID);
 	    	saleOrderDAO.insert(saleOrders);
 	    	// change eth from seller and buyer
 	    	saleOrderDAO.exchangeEth(saleOrders);

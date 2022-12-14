@@ -9,6 +9,7 @@ public class nft {
 	protected String createdBy;
 	protected String dateCreated;
 	protected String ImageLink;
+	protected int num;
 
 	
 	
@@ -48,6 +49,12 @@ public class nft {
 		NFTDescription = nFTDescription;
 		NFTOwner = nFTOwner;
 		ImageLink = imageLink;
+	}
+	
+	public nft(String createdBy, int num) {
+		super();
+		this.createdBy = createdBy;
+		this.num = num;
 	}
 	
 	public nft(String nFTname) {

@@ -30,10 +30,21 @@
 		 	 <a href="TransferPage.jsp" target="_self">Transfer An NFT</a> &nbsp
 		 	 <a href="SearchForNft.jsp" target="_self">Search For An NFT</a> &nbsp		  
 			 <a href="login.jsp"target ="_self" > Logout</a>&nbsp
-			 <a href="SearchForUser.jsp" target="_self">Search For A User</a> &nbsp	
+			 <a href="SearchForUser.jsp"target ="_self" > Search For User</a>&nbsp
 			 <a href="listAllNftsMinted.jsp" target="_self">List NFTS Minted</a>&nbsp
 			 <a href="listAllNftsPurchased.jsp" target="_self">List NFTS Purchased</a>&nbsp
 			 <a href="listAllNftsSold.jsp" target="_self">List NFTS Sold</a>
+			 <a href="bigCreators.jsp" target="_self">List Big Creators</a>&nbsp
+			 <a href="bigSellers.jsp" target="_self">List Big Sellers</a>&nbsp
+			 <a href="bigBuyers.jsp" target="_self">List Big Buyers</a>&nbsp
+			 <a href="HotNfts.jsp" target="_self">List Hot Nfts</a>&nbsp
+			 <a href="InactiveUsers.jsp" target="_self">List Inactive Users</a>&nbsp
+			 <a href="GoodBuyers.jsp" target="_self">List Good Buyers</a>&nbsp
+			 <a href="DiamondHands.jsp" target="_self">List Diamond Hands</a>&nbsp
+			 <a href="PaperHands.jsp" target="_self">List Paper Hands</a>&nbsp
+			 <a href="UserStatistics.jsp" target="_self">List User Statistics</a>&nbsp
+			 <a href="CommonNfts.jsp" target="_self">List Common Nfts</a>&nbsp
+			 
 		 </div>
 		 <p> You can show all the transactions or other attributes here like balance, name of the user and others.</p>
 		 </center>

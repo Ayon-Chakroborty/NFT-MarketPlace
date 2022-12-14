@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 
@@ -142,7 +144,7 @@ public class saleOrderDAO {
           disconnect();
     }
     
-   public saleOrder createSaleOrderByNftName(String nftName, String nftBuyer)throws SQLException {
+   public saleOrder createSaleOrderByNftName(String nftName, String nftBuyer, int saleListingGlobal)throws SQLException {
   		System.out.println("In saleOrderDAO createSaleOrderByNftName() method");
 	   // get nftID from nftName
     	connect_func();   
@@ -157,15 +159,16 @@ public class saleOrderDAO {
 		}
         preparedStatement.close();
 
-	   //get saleListing ID and seller from sale_listings
-    	String sql = "select listID,nftSeller from sale_listings where nftListed=" + nftId;
+	    //get saleListing ID and seller from sale_listings
+        //String sql = "select listID,nftSeller from sale_listings where nftListed=" + nftId;
+        String sql = "select nftSeller from sale_listings where listID=" + saleListingGlobal;
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 		
 		resultSet = preparedStatement.executeQuery();
-		int listId = 0;
+		int listId = saleListingGlobal;
 		String nftSeller = null;
 		if(resultSet.next()) {
-			listId = resultSet.getInt("listID");
+			//listId = resultSet.getInt("listID");
 			nftSeller = resultSet.getString("nftSeller");
 		}
         preparedStatement.close();
@@ -179,6 +182,123 @@ public class saleOrderDAO {
        // return a new saleOrderObject 
 	   return new saleOrder(listId, nftId, nftSeller, nftBuyer, dtf.format(localDate));
    }
+
+   public List<user> listAllBigSellers() throws SQLException {
+   	System.out.println("In listAllBigSellers in nftDAO class");
+   	connect_func();         
+		List<user> listAllBigSellers = new ArrayList<user>();
+		
+		String sql2 = "select nftSeller, Num from bigSeller\r\n"
+				+ "where Num = (select max(num) from bigSeller);";
+		
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sql2);
+		resultSet = preparedStatement.executeQuery();
+		int count = 0;
+		while(resultSet.next()) {
+			count++;
+			String email = resultSet.getString("nftSeller");
+			user users = new user(email);
+			listAllBigSellers.add(users);
+		}
+		if (count == 0) {
+			return null;
+		}
+		else
+			return listAllBigSellers;
+   }
+   
+   public List<user> listAllBigBuyers() throws SQLException {
+	   	System.out.println("In listAllBigBuyer in nftDAO class");
+	   	connect_func();         
+			List<user> listAllBigBuyers = new ArrayList<user>();
+			
+			String sql2 = "select soldTo, Num from bigBuyer\r\n"
+					+ "where Num = (select max(num) from bigBuyer);";
+			
+			preparedStatement = (PreparedStatement) connect.prepareStatement(sql2);
+			resultSet = preparedStatement.executeQuery();
+			int count = 0;
+			while(resultSet.next()) {
+				count++;
+				String email = resultSet.getString("soldTo");
+				user users = new user(email);
+				listAllBigBuyers.add(users);
+			}
+			if (count == 0) {
+				return null;
+			}
+			else
+				return listAllBigBuyers;
+	   }
+
+	public List<user> listAllGoodBuyers() throws SQLException {
+	   	System.out.println("In listAllGoodBuyers in nftDAO class");
+	   	connect_func();         
+		List<user> listAllGoodBuyers = new ArrayList<user>();
+		
+		String sql2 = "select soldTo from goodBuyers;";
+		
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sql2);
+		resultSet = preparedStatement.executeQuery();
+		int count = 0;
+		while(resultSet.next()) {
+			count++;
+			String email = resultSet.getString("soldTo");
+			user users = new user(email);
+			listAllGoodBuyers.add(users);
+		}
+		if (count == 0) {
+			return null;
+		}
+		else
+			return listAllGoodBuyers;
+	}
+
+	public List<user> listDiamondHands() throws SQLException {
+	   	System.out.println("In listDiamondHands in nftDAO class");
+	   	connect_func();         
+		List<user> listDiamondHands = new ArrayList<user>();
+		
+		String sql = "select * from DiamondHands;";
+		
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		resultSet = preparedStatement.executeQuery();
+		int count = 0;
+		while(resultSet.next()) {
+			count++;
+			String email = resultSet.getString("email");
+			user users = new user(email);
+			listDiamondHands.add(users);
+		}
+		if (count == 0) {
+			return null;
+		}
+		else
+			return listDiamondHands;
+	}
+
+	public List<user> listPaperHands() throws SQLException {
+	   	System.out.println("In listPaperHands in nftDAO class");
+	   	connect_func();         
+		List<user> listPaperHands = new ArrayList<user>();
+		
+		String sql = "select * from PaperHands;";
+		
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		resultSet = preparedStatement.executeQuery();
+		int count = 0;
+		while(resultSet.next()) {
+			count++;
+			String email = resultSet.getString("email");
+			user users = new user(email);
+			listPaperHands.add(users);
+		}
+		if (count == 0) {
+			return null;
+		}
+		else
+			return listPaperHands;
+	}
 }
     
 

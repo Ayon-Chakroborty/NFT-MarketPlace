@@ -3,7 +3,11 @@
     
 <%
 	boolean doesNftExist = Boolean.TRUE == request.getAttribute("doesNftExist");
-	boolean doesSaleListingExist = Boolean.TRUE == request.getAttribute("saleListingExists");
+
+	boolean doesSaleListingExist = false;
+	if(request.getAttribute("saleListingExists") != null){
+		doesSaleListingExist = true;
+	}
 	boolean isDateWithinBuyingTime = Boolean.TRUE == request.getAttribute("dateWithinListingDateRange");
 	System.out.println("Date within time:" + isDateWithinBuyingTime);
 	boolean doesUserHaveEnoughFunds = Boolean.TRUE == request.getAttribute("canUserBuyNft");

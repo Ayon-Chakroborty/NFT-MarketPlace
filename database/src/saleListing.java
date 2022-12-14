@@ -7,6 +7,7 @@ public class saleListing {
 	protected String datePosted;
 	protected String endingDate;
 	protected int nftSold;
+	protected int listId;
 	
 
 	public saleListing(String nftListed, String nftSeller, double price, String datePosted, String endingDate, int nftSold) {
@@ -17,6 +18,27 @@ public class saleListing {
 		this.datePosted = datePosted;
 		this.endingDate = endingDate;
 		this.nftSold = nftSold;
+	}
+
+	public saleListing(int listId, String nftListed, String nftSeller, double price, String datePosted, String endingDate, int nftSold) {
+		super();
+		this.listId = listId;
+		this.nftListed = nftListed;
+		this.nftSeller = nftSeller;
+		this.price = price;
+		this.datePosted = datePosted;
+		this.endingDate = endingDate;
+		this.nftSold = nftSold;
+	}
+	
+	
+
+	public int getListId() {
+		return listId;
+	}
+
+	public void setListId(int listId) {
+		this.listId = listId;
 	}
 
 	public String getNftListed() {

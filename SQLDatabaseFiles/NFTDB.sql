@@ -76,5 +76,88 @@ create table if not exists User (
  foreign key(nftOwner) references User(email)
  );
  
+drop view if exists mostCreated; 
+create view mostCreated(createdBy, Num)
+as select createdBy, count(*) as Num
+from NFT 
+group by createdBy;
+
+drop view if exists bigSeller; 
+create view bigSeller(nftSeller, Num)
+as select nftSeller, count(*) as Num
+from sale_orders
+group by nftSeller;
+
+drop view if exists bigBuyer; 
+create view bigBuyer(soldTo, Num)
+as select soldTo, count(*) as Num
+from sale_orders
+group by soldTo;
+
+drop view if exists getHotNft; 
+create view getHotNft
+as select n.nftName, 
+(select count(1) from sale_orders s where s.nftToBeSold=n.NFTID) 
++
+(select count(1) from transfer_orders t where t.nftToBeTransferred=n.NFTID) 
+as num
+from NFT n 
+group by n.NFTID;
+
+drop view if exists goodBuyers; 
+create view goodBuyers
+as select soldTo, count(distinct nftToBeSold) as nftSold
+from sale_orders
+group by soldTo
+having nftSold >= 3;
+
+drop view if exists innactiveUsers; 
+create view innactiveUsers
+as select u.email
+from user u
+left join NFT n
+on n.createdBy=u.email
+left join sale_orders s
+on s.nftSeller=u.email or s.soldTo=u.email
+left join transfer_orders t
+on t.nftOwner=u.email or t.transferredTo=u.email
+where 
+u.email is not null and
+n.createdBy is null and
+s.nftSeller is null and
+s.soldTo is null and
+t.nftOwner is null and
+t.transferredTo is null
+group by u.email;
+
+drop view if exists userStatistics; 
+create view userStatistics
+as select u.email, 
+(select count(1) from sale_orders s where s.soldTo=u.email) as buys,
+(select count(1) from sale_orders s where s.nftSeller=u.email) as sells,
+(select count(1) from transfer_orders t where t.nftOwner=u.email) as transfers,
+(select count(1) from NFT n where n.nftOwner=u.email) as nftsOwned
+from User u
+group by u.email;
+
+drop view if exists DiamondHands; 
+create view DiamondHands
+as select u.email, 
+(select count(1) from sale_orders s where s.soldTo=u.email and u.email
+not in(select s.nftSeller from sale_orders s where s.nftSeller=u.email)) as count
+from user u
+group by u.email
+having count > 0;
+
+drop view if exists PaperHands; 
+create view PaperHands
+as select u.email
+from user u 
+where (select count(1) from sale_orders s where s.soldTo=u.email and u.email
+in(select s.nftSeller from sale_orders s where s.nftSeller=u.email) and u.email
+not in(select nftOwner from NFT where nftOwner=u.email))
+group by u.email;
+
+
  show tables;
 

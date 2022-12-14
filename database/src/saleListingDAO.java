@@ -1,4 +1,6 @@
 import java.sql.Connection;
+import javax.servlet.http.HttpSession;
+
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -75,36 +77,40 @@ public class saleListingDAO {
         
     }
     
-    public Boolean doesSaleListingExist(int nftId) throws SQLException {
+    public saleListing doesSaleListingExist(int nftId) throws SQLException {
     	connect_func();
     	System.out.println("In doesSaleListingExist() in saleListingDAO class");
-    	saleListing listingNotSold = getSaleListingInfoByName(nftId);
+    	//saleListing listingNotSold = getSaleListingInfoByName(nftId);
 
     	
-    	String sql = "select count(nftListed) from sale_listings where nftListed=" + nftId; //Get the NFTID from the NFT Table
+    	String sql = "select * from sale_listings where nftListed=" + nftId; //Get the NFTID from the NFT Table
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 		resultSet = preparedStatement.executeQuery();
 		
-		int count = 0;
-    	if(resultSet.next()) {
-    		count = resultSet.getInt(1);
-    		if (count == 1 && listingNotSold.getNftSold() == 0) {
+		//int count = 0;
+		int sold = -1;
+		int listId = -1;
+    	while(resultSet.next()) {
+    		sold = resultSet.getInt("nftSold");
+    		listId = resultSet.getInt("listID");
+    		if (sold == 0) {
     			preparedStatement.close();
-    			return true;
+    			saleListing saleListings = getSaleListingInfoByListId(listId);
+    			return saleListings;
     		}
     	}
     	
     	
     	
         preparedStatement.close();
-    	return false;
+    	return null;
     }
     
-    public saleListing getSaleListingInfoByName(int nftId) throws SQLException {
+    public saleListing getSaleListingInfoByListId(int listId) throws SQLException {
     	connect_func();
     	System.out.println("In getSaleListingInfoByName() in saleListingDAO class");
     	
-    	String sqlGetNFTID = "select * from sale_listings where nftListed=" + nftId; //Get the NFTID from the NFT Table
+    	String sqlGetNFTID = "select * from sale_listings where listID=" + listId; //Get the NFTID from the NFT Table
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sqlGetNFTID);
 		
 		resultSet = preparedStatement.executeQuery();
@@ -128,7 +134,7 @@ public class saleListingDAO {
 		}
 		
 		preparedStatement.close();
-        return new saleListing(nftListed, nftSeller, nftPrice, startDate, endDate, nftSold );
+        return new saleListing(listId, nftListed, nftSeller, nftPrice, startDate, endDate, nftSold );
     	
     }
     

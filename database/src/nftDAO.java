@@ -215,4 +215,78 @@ public class nftDAO {
     	
     }
 
+	public List<user> listAllBigCreators() throws SQLException {
+    	System.out.println("In listAllBigCreators in nftDAO class");
+    	connect_func();         
+		List<user> listAllBigCreators = new ArrayList<user>();
+		
+		String sql2 = "select createdBy, Num from mostCreated\r\n"
+				+ "where Num = (select max(num) from mostCreated);";
+		
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sql2);
+		resultSet = preparedStatement.executeQuery();
+		int count = 0;
+		while(resultSet.next()) {
+			count++;
+			String nftOwner = resultSet.getString("createdBy");
+
+			user users = new user(nftOwner);
+			listAllBigCreators.add(users);
+		}
+		if (count == 0) {
+			return null;
+		}
+		else
+			return listAllBigCreators;
+	}
+
+	public List<nft> listHotNfts() throws SQLException {
+	   	System.out.println("In listHotNfts in nftDAO class");
+	   	connect_func();         
+			List<nft> listAllHotNfts = new ArrayList<nft>();
+			
+			String sql2 = "select nftName from getHotNft\r\n"
+					+ "where Num = (select max(num) from getHotNft);";
+			
+			preparedStatement = (PreparedStatement) connect.prepareStatement(sql2);
+			resultSet = preparedStatement.executeQuery();
+			int count = 0;
+			while(resultSet.next()) {
+				count++;
+				String nftName = resultSet.getString("nftName");
+				nft nfts = new nft(nftName);
+				listAllHotNfts.add(nfts);
+			}
+			if (count == 0) {
+				return null;
+			}
+			else
+				return listAllHotNfts;
+	  }
+	
+	public nft getNftInfoById(int nftId) throws SQLException {
+    	connect_func();
+    	System.out.println("In getNftInfoById() in nftDAO class");
+    	
+    	String sqlGetNFTID = "select * from NFT where NFTID=" + nftId; //Get the NFTID from the NFT Table
+		preparedStatement = (PreparedStatement) connect.prepareStatement(sqlGetNFTID);
+		
+		resultSet = preparedStatement.executeQuery();
+		String nftName = null;
+		String nftDescription = null;
+		String nftImageUrl = null;
+		String nftOwner = null;
+		if(resultSet.next()) {
+			nftName = resultSet.getString("nftName");
+			nftDescription = resultSet.getString("nftDescription");
+			nftImageUrl = resultSet.getString("imageUrl");
+			nftOwner = resultSet.getString("nftOwner");
+			
+		}
+
+        preparedStatement.close();
+        return new nft(nftId, nftName, nftDescription,nftOwner, nftImageUrl); 
+    	
+    }
+
 }

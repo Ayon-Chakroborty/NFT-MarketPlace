@@ -316,6 +316,102 @@ public class userDAO
         	statement.execute(TUPLES[i]);
         disconnect();
     }
+
+	public List<user> listInactiveUsers() throws SQLException, FileNotFoundException, IOException {
+	   	System.out.println("In listAllInactiveUsers() in userDAO class");
+	   	connect_func();         
+			List<user> listAllInactiveUsers = new ArrayList<user>();
+			
+			String sql = "select * from innactiveUsers;";
+			
+			preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			int count = 0;
+			while(resultSet.next()) {
+				count++;
+				String email = resultSet.getString("email");
+				user users = new user(email);
+				listAllInactiveUsers.add(users);
+			}
+			if (count == 0) {
+				return null;
+			}
+			else
+				return listAllInactiveUsers;
+	   }
+
+	public List<userStatistics> listUserStatistics(String userName) throws SQLException {
+	   	System.out.println("In listUserStatistics() in userDAO class");
+	   	connect_func();         
+			List<userStatistics> listUserStatistics = new ArrayList<userStatistics>();
+			
+			String sql = "select * from userStatistics where email=" +"\"" + userName + "\"";
+			
+			preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			int count = 0;
+			while(resultSet.next()) {
+				count++;
+				String email = resultSet.getString("email");
+				int buys = resultSet.getInt("buys");
+				int sells = resultSet.getInt("sells");
+				int transfers = resultSet.getInt("transfers");
+				int nftsOwned = resultSet.getInt("NftsOwned");
+				userStatistics users = new userStatistics(email, buys, sells, transfers, nftsOwned);
+				listUserStatistics.add(users);
+			}
+			if (count == 0) {
+				return null;
+			}
+			else
+				return listUserStatistics;
+	}
+
+	public List<nft> commonNfts(String user1, String user2) throws SQLException {
+	   	System.out.println("In commonNfts in nftDAO class");
+	   	connect_func();         
+			List<nft> commonNfts = new ArrayList<nft>();
+			
+			String sql2 = "select s1.nftToBeSold as nft\r\n"
+					+ "from sale_orders s1, sale_orders s2, sale_orders s3, sale_orders s4\r\n"
+					+ "where (s1.nftSeller=? or\r\n"
+					+ "	s2.nftSeller=?) and\r\n"
+					+ "    (s3.soldTo=? or\r\n"
+					+ "    s4.soldTo=?)\r\n"
+					+ "union \r\n"
+					+ "select t1.nftToBeTransferred\r\n"
+					+ "from transfer_orders t1, transfer_orders t2, transfer_orders t3, transfer_orders t4\r\n"
+					+ "where (t1.nftOwner=? or\r\n"
+					+ "	t2.nftOwner=?) and\r\n"
+					+ "    (t3.transferredTo=? or\r\n"
+					+ "    t4.transferredTo=?);";
+			
+			preparedStatement = (PreparedStatement) connect.prepareStatement(sql2);
+			preparedStatement.setString(1, user1);
+			preparedStatement.setString(2, user2);
+			preparedStatement.setString(3, user1);
+			preparedStatement.setString(4, user2);
+			preparedStatement.setString(5, user1);
+			preparedStatement.setString(6, user2);
+			preparedStatement.setString(7, user1);
+			preparedStatement.setString(8, user2);
+
+			resultSet = preparedStatement.executeQuery();
+			nftDAO nftDAO = new nftDAO();
+			int count = 0;
+			while(resultSet.next()) {
+				count++;
+				int nftID = resultSet.getInt("nft");
+				nft nfts = nftDAO.getNftInfoById(nftID);
+				commonNfts.add(nfts);
+			}
+			if (count == 0) {
+				return null;
+			}
+			else
+				return commonNfts;
+	}
+}
     
     
    
@@ -325,6 +421,3 @@ public class userDAO
     
     
 	
-	
-
-}
