@@ -1,11 +1,11 @@
 # CSC4710Project
 
 ## Ayon Contributions
-### Helped with ER Diagram, Assumptions, implemented database, and implemented registration functionailty 
+### Completed Step 1,4,5,6,7,8,9,10 of part 4
 
 ## Jamil Ali contributions
-### Helped with ER Diagram, Assumptions, and implemented root user and login functionaility
+### Completed Ste 2,3
 
-## Hours Working Together: 11 Hours
+## Hours Working Together: 40 Hours
 
 ## Requirements: SQL DB script inside the SQLDatabaseFiles folder
