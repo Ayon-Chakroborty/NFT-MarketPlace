@@ -4,7 +4,7 @@
 ### Completed Step 1,4,5,6,7,8,9,10 of part 4
 
 ## Jamil Ali contributions
-### Completed Ste 2,3
+### Completed Step 2,3 of part 4
 
 ## Hours Working Together: 40 Hours
 
