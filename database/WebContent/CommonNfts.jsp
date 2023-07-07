@@ -14,7 +14,7 @@
 </head>
 <body>
 <div align = "center">
-
+	
 	
 		<form action="commonNfts">
 			<input type="text" name="user1" placeholder="Search User 1">

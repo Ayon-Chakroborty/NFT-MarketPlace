@@ -305,7 +305,7 @@ public class ControlServlet extends HttpServlet {
 				 System.out.println("Login Successful! Redirecting");
 				 session = request.getSession();
 				 session.setAttribute("username", email);
-				 request.getRequestDispatcher("activitypage.jsp").forward(request, response);
+				 request.getRequestDispatcher("activitypage.jsp").forward(request, response);		     
 			 			 			 			 
 	    	 }
 	    	 else {
